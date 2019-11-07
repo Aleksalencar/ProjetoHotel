@@ -1,6 +1,6 @@
 package hotel.entidades;
 
-public class Cliente extends Pessoa{
+public class Funcionario extends Pessoa{
 	private String nome;
 	private String email;
 	private String telefone;
@@ -8,7 +8,8 @@ public class Cliente extends Pessoa{
 	private String CPF;
 	private int numero;
 	private char sexo;
-	private int qtdCliente;
+	private String login;
+	private String senha;
 	
 	public String getNome() {
 		return nome;
@@ -16,7 +17,6 @@ public class Cliente extends Pessoa{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
 	public String getEmail() {
 		return email;
 	}
@@ -53,11 +53,17 @@ public class Cliente extends Pessoa{
 	public void setSexo(char sexo) {
 		this.sexo = sexo;
 	}
-	public int getQtdCliente() {
-		return qtdCliente;
+	public String getLogin() {
+		return login;
 	}
-	public void setQtdCliente(int qtdCliente) {
-		this.qtdCliente = qtdCliente;
+	public void setLogin(String login) {
+		this.login = login;
+	}
+	public String getSenha() {
+		return senha;
+	}
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 	
 }
