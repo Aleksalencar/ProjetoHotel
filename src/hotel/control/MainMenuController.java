@@ -9,11 +9,12 @@ import javafx.stage.Stage;
 public class MainMenuController {
 
 	public void controlTelas(int i) {
+		Stage stage = new Stage();
 		switch (i) {
 		case 3:
 			ClienteBoundary tela = new ClienteBoundary();
 			try {
-				tela.start(new Stage());
+				tela.start(stage);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -22,7 +23,7 @@ public class MainMenuController {
 		case 4:
 			FuncionarioBoundary tela1 = new FuncionarioBoundary();
 			try {
-				tela1.start(new Stage());
+				tela1.start(stage);
 			} catch (Exception e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
@@ -39,7 +40,7 @@ public class MainMenuController {
 		case 6:
 			try {
 				EstoqueBoundary tela4 = new EstoqueBoundary();
-			//	tela.start(new Stage());
+				tela4.start(stage);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

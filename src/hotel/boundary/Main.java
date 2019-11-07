@@ -84,6 +84,8 @@ public class Main extends Application implements EventHandler<Event> {
 	public void handle(Event event) {
 		if (event.getTarget().equals(btnCliente)) {
 			control.controlTelas(3);
+		} else if (event.getTarget().equals(btnFunc)){
+			control.controlTelas(4);
 		} else if (event.getTarget().equals(btnPromo)) {
 			control.controlTelas(5);
 		} else if (event.getTarget().equals(btnEstoque)) {
