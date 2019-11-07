@@ -1,6 +1,7 @@
 package hotel.entidades;
 
 public abstract class Pessoa {
+	
 	protected String nome;
 	protected String email;
 	protected String telefone;
@@ -8,6 +9,7 @@ public abstract class Pessoa {
 	protected String CPF;
 	protected int numero;
 	protected char sexo;
+	
 	protected String getNome() {
 		return nome;
 	}
