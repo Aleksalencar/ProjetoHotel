@@ -1,13 +1,10 @@
 package hotel.boundary;
 
-import java.awt.Button;
 
 import javax.swing.JOptionPane;
 
-import com.sun.prism.paint.Color;
 
 import hotel.control.PromocoesControl;
-import hotel.entidades.Cliente;
 import hotel.entidades.Promocoes;
 
 import javafx.application.Application;
