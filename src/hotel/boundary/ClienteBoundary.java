@@ -95,9 +95,7 @@ public class ClienteBoundary extends Application implements EventHandler<ActionE
 		ClientesStage.setScene(cena);
 		ClientesStage.show();
 	}
-	public static void main(String[] args){
-		launch();
-	}
+
 	@Override
 	public void handle(ActionEvent event) {
 		if (event.getTarget() == btnAdicionar) { 

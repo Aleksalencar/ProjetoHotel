@@ -6,21 +6,18 @@ import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class EstoqueBoundary extends Application implements EventHandler<Event>{
+public class EstoqueBoundary {
 	
-	private TextField  = new TextField();
+	//private TextField  = new TextField();
 	
-	@Override
-	public void start(Stage stage) throws Exception {
+	//@Override
+	//public void start(Stage stage) thr{ows Exception {
 		
 	}
 
-	@Override
-	public void handle(Event event) {
+	//@Override/
+	//public void handle(Event event) {
 
-	}
+	//}
 		
 
-	
-	
-}
