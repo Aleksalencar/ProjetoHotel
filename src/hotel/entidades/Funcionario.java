@@ -1,5 +1,7 @@
 package hotel.entidades;
 
+import hotel.enumeracao.tipoFuncionario;
+
 public class Funcionario extends Pessoa{
 	private String nome;
 	private String email;
@@ -10,7 +12,14 @@ public class Funcionario extends Pessoa{
 	private char sexo;
 	private String login;
 	private String senha;
+	private tipoFuncionario cargo;
 	
+	public tipoFuncionario getCargo() {
+		return cargo;
+	}
+	public void setCargo(tipoFuncionario cargo) {
+		this.cargo = cargo;
+	}
 	public String getNome() {
 		return nome;
 	}

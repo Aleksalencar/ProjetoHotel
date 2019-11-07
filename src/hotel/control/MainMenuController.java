@@ -32,7 +32,7 @@ public class MainMenuController {
 		case 5:
 			try {
 				PromocoesBoundary tela2 = new PromocoesBoundary();
-				tela2.start(new Stage());
+				tela2.start(stage);
 			} catch (Exception e3) {
 				e3.printStackTrace();
 			}
