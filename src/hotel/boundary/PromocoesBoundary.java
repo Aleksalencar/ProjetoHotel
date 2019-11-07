@@ -71,7 +71,7 @@ public class PromocoesBoundary extends Application implements EventHandler<Actio
 		btnAplicarPromocoes.addEventHandler(ActionEvent.ANY, this);
 		btnEnviarEmail.addEventHandler(ActionEvent.ANY, this);
 		
-		Scene cena = new Scene(painelPrincipal, 500, 300);
+		Scene cena = new Scene(painelPrincipal, 700, 500);
 		promocoesStage.setTitle("Promoções para clientes/quartos");
 		promocoesStage.setScene(cena);
 		promocoesStage.show();

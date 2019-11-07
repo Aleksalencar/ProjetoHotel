@@ -84,7 +84,7 @@ public class FuncionarioBoundary extends Application implements EventHandler<Act
 		btnPesquisar.addEventHandler(ActionEvent.ANY, this);
 		btnAlterar.addEventHandler(ActionEvent.ANY, this);
 		
-		Scene cena = new Scene(painelPrincipal, 550, 660);
+		Scene cena = new Scene(painelPrincipal, 700, 500);
 		funcionarioStage.setTitle("Cadastro de Funcionario");
 		funcionarioStage.setScene(cena);
 		funcionarioStage.show();

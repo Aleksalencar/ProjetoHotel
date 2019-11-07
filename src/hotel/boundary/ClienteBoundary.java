@@ -90,7 +90,7 @@ public class ClienteBoundary extends Application implements EventHandler<ActionE
 		btnPesquisar.addEventHandler(ActionEvent.ANY, this);
 		btnAlterar.addEventHandler(ActionEvent.ANY, this);
 		
-		Scene cena = new Scene(painelPrincipal, 450, 500);
+		Scene cena = new Scene(painelPrincipal, 700, 500);
 		ClientesStage.setTitle("Cadastro de Clientes");
 		ClientesStage.setScene(cena);
 		ClientesStage.show();
@@ -98,6 +98,7 @@ public class ClienteBoundary extends Application implements EventHandler<ActionE
 
 	@Override
 	public void handle(ActionEvent event) {
+		
 		if (event.getTarget() == btnAdicionar) { 
 			control.manterCliente( boundaryEntidade() );
 		} else if (event.getTarget() == btnPesquisar) {
