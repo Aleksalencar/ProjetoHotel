@@ -7,6 +7,8 @@ import java.util.Observable;
 
 import hotel.control.EstoqueController;
 import hotel.entidades.Produto;
+import hotel.interfaces.BoundaryContent;
+import hotel.interfaces.Executor;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,19 +29,22 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class EstoqueBoundary extends Application implements EventHandler<Event> {
+public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEvent>{
 
 	private EstoqueController control = new EstoqueController();
 	private TextField txtCod = new TextField();
 	private TextField txtNome = new TextField();
 	private TextField txtDesc = new TextField();
 	private TextField txtValor = new TextField();
+	
 	private Button btnAdicionar = new Button("Adicionar");
 	private Button btnPesquisar = new Button("Pesquisar");
+	private Button btnMenu = new Button("Voltar");
 	
 	GridPane grid = new GridPane();
 	private int rowIndex;
@@ -48,12 +53,10 @@ public class EstoqueBoundary extends Application implements EventHandler<Event> 
 	private TableView<Produto> table = new TableView<>();
 	ArrayList<Produto> lista = new ArrayList<Produto>();
 	ObservableList<Produto> dados = FXCollections.observableList(lista);
-	
-	@Override
-	public void start(Stage stage) throws Exception {
-		box.setPrefSize(500,300);
-		box.setSpacing(20);
-		//box.setAlignment(Pos.CENTER);
+	private Executor executor;
+
+	public EstoqueBoundary(Executor e) {
+		this.setExecutor(e);
 		
 		grid.setHgap(50);
 		grid.setVgap(5);
@@ -66,13 +69,17 @@ public class EstoqueBoundary extends Application implements EventHandler<Event> 
 		btRemove.setPrefWidth(70);
 		grid.add(btAdd, 0, rowIndex);
 		grid.add(btRemove, 1, rowIndex);
-						
+		grid.add(btnMenu, 2, rowIndex);				
 		
 		generateTable();
+		
 		box.getChildren().add(grid);
-		Scene scn = new Scene(box);
-		stage.setScene(scn);
-		stage.show();
+		btnMenu.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				executor.executar("Menu principal");
+			}
+		});
 	}
 	
 	private void generateTable() {
@@ -100,7 +107,7 @@ public class EstoqueBoundary extends Application implements EventHandler<Event> 
 	}
 
 	@Override
-	public void handle(Event event) {
+	public void handle(ActionEvent event) {
 		if (event.getTarget() == btnAdicionar) { 
 			//control.adicionar( boundaryParaEntity(new Produto()) );
 		} else if (event.getTarget() == btnPesquisar) {
@@ -108,6 +115,24 @@ public class EstoqueBoundary extends Application implements EventHandler<Event> 
 			Produto q = control.buscarProduto(cod);
 			//entidadeParaBoundary(q);			
 		}
+	}
+
+	@Override
+	public void setExecutor(Executor e) {
+		// TODO Auto-generated method stub
+		this.executor = e;
+	}
+
+	@Override
+	public Executor getExecutor() {
+		return this.executor;
+	}
+
+
+	@Override
+	public Pane gerarTela() {
+		// TODO Auto-generated method stub
+		return box;
 	}
 
 
