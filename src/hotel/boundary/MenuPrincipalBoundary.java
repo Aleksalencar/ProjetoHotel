@@ -1,5 +1,8 @@
 package hotel.boundary;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import hotel.interfaces.BoundaryContent;
 import hotel.interfaces.Executor;
 import javafx.event.ActionEvent;
@@ -7,6 +10,12 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -23,13 +32,14 @@ public class MenuPrincipalBoundary implements BoundaryContent, EventHandler<Acti
 	private VBox box = new VBox();
 	private Executor executor;
 
-	public MenuPrincipalBoundary(Executor e) {
+	public MenuPrincipalBoundary(Executor e) throws FileNotFoundException {
 		this.setExecutor(e);
 		
 		box.setAlignment(Pos.CENTER);
 		box.setSpacing(20); // 2
 		box.addEventHandler(ActionEvent.ANY, this);
-		
+		definirBackground();
+
 		titulo.setTextAlignment(TextAlignment.CENTER);
 		titulo.setFont(new Font(27));
 		box.getChildren().add(titulo);
@@ -48,6 +58,18 @@ public class MenuPrincipalBoundary implements BoundaryContent, EventHandler<Acti
 		btnEstoque.addEventHandler(ActionEvent.ANY, this);
 		
 		
+	}
+	
+	public void definirBackground() throws FileNotFoundException{
+		FileInputStream imagem = new FileInputStream("src/hotel/images/menu.jpg");
+		Image image = new Image(imagem); 
+	    BackgroundImage backgroundimage = new BackgroundImage(image,  
+	                                     BackgroundRepeat.NO_REPEAT,  
+	                                     BackgroundRepeat.NO_REPEAT,  
+	                                     BackgroundPosition.DEFAULT,  
+	                                        BackgroundSize.DEFAULT); 
+        Background background = new Background(backgroundimage); 
+        box.setBackground(background);
 	}
 	@Override
 	public Pane gerarTela() {

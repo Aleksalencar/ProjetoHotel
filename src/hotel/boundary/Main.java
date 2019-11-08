@@ -1,34 +1,24 @@
 package hotel.boundary;
 
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Set;
 
 import hotel.interfaces.BoundaryContent;
 import hotel.interfaces.Executor;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+
 
 public class Main extends Application implements EventHandler<Event>, Executor{
 
@@ -42,22 +32,21 @@ public class Main extends Application implements EventHandler<Event>, Executor{
 	private Button btnEstoque = new Button("Estoque");
 	//private Button btnMenu = new Button("Menu principal");
 	private Map<String, BoundaryContent> telas = new HashMap<>();
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
 	@Override
-	public void start(Stage stage) {
-		
+	public void start(Stage stage) throws FileNotFoundException {
 		box.setPrefSize(700.0, 650.0);
 		box.setAlignment(Pos.CENTER);
 		box.setSpacing(20); // 2
 		box.addEventHandler(ActionEvent.ANY, this);
-
 		titulo.setTextAlignment(TextAlignment.CENTER);
 		titulo.setFont(new Font(27));
 		box.getChildren().add(titulo);
-
+	
+		
 		gerartelas();
 		Scene scn = new Scene(box);
 		stage.setScene(scn);
@@ -65,7 +54,7 @@ public class Main extends Application implements EventHandler<Event>, Executor{
 		executar("Menu principal");
 
 	}
-	public void gerartelas() {
+	public void gerartelas() throws FileNotFoundException {
 
 		// gerar as telas 
 	    telas.put("Menu principal", new MenuPrincipalBoundary(this));
