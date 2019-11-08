@@ -7,6 +7,8 @@ import java.util.Observable;
 
 import hotel.control.EstoqueController;
 import hotel.entidades.Produto;
+import hotel.interfaces.BoundaryContent;
+import hotel.interfaces.Executor;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,11 +29,12 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class EstoqueBoundary extends Application implements EventHandler<Event> {
+public class EstoqueBoundary implements BoundaryContent,EventHandler<Event> {
 
 	private EstoqueController control = new EstoqueController();
 	private TextField txtCod = new TextField();
@@ -49,8 +52,12 @@ public class EstoqueBoundary extends Application implements EventHandler<Event> 
 	ArrayList<Produto> lista = new ArrayList<Produto>();
 	ObservableList<Produto> dados = FXCollections.observableList(lista);
 	
-	@Override
-	public void start(Stage stage) throws Exception {
+	public EstoqueBoundary(Main main) {
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public Pane gerarTela() {
 		box.setPrefSize(500,300);
 		box.setSpacing(20);
 		//box.setAlignment(Pos.CENTER);
@@ -66,14 +73,13 @@ public class EstoqueBoundary extends Application implements EventHandler<Event> 
 		btRemove.setPrefWidth(70);
 		grid.add(btAdd, 0, rowIndex);
 		grid.add(btRemove, 1, rowIndex);
-						
+		
 		
 		generateTable();
 		box.getChildren().add(grid);
-		Scene scn = new Scene(box);
-		stage.setScene(scn);
-		stage.show();
+		return box;
 	}
+	
 	
 	private void generateTable() {
         TableColumn colunaNome = new TableColumn<>("Nome");
@@ -109,6 +115,20 @@ public class EstoqueBoundary extends Application implements EventHandler<Event> 
 			//entidadeParaBoundary(q);			
 		}
 	}
+
+	@Override
+	public void setExecutor(Executor e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Executor getExecutor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 
 
 }

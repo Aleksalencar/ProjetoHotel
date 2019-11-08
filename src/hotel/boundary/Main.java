@@ -72,6 +72,7 @@ public class Main extends Application implements EventHandler<Event>, Executor{
 		telas.put(btnFunc.getText(), new FuncionarioBoundary(this));
 		telas.put(btnCliente.getText(), new ClienteBoundary(this));
 		telas.put(btnPromo.getText(), new PromocoesBoundary(this));
+		telas.put(btnPromo.getText(), new EstoqueBoundary(this));
 	}
 
 
