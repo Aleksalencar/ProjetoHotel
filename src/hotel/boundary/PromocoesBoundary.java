@@ -6,43 +6,51 @@ import javax.swing.JOptionPane;
 
 import hotel.control.PromocoesControl;
 import hotel.entidades.Promocoes;
-
+import hotel.interfaces.BoundaryContent;
+import hotel.interfaces.Executor;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-public class PromocoesBoundary extends Application implements EventHandler<ActionEvent>{
+public class PromocoesBoundary implements BoundaryContent, EventHandler<ActionEvent>{
 	private PromocoesControl promoControl = new PromocoesControl();
 	private TextField txtValor = new TextField();
 	private TextField txtCodigoDesconto = new TextField();
+	
 	private javafx.scene.control.Button btnAplicarPromocoes = new javafx.scene.control.Button("Gerar cupom promocional");
 	private javafx.scene.control.Button btnEnviarEmail = new javafx.scene.control.Button("Enviar cupom para cliente");
+	private Button btnMenu = new Button(" Voltar ao Menu");
+
 	
+	private BorderPane painelPrincipal = new BorderPane();
+	private GridPane painelCampos = new GridPane();
+	private FlowPane painelBotoes = new FlowPane();	
+	
+	private Executor executor;
+
 	public Promocoes boundaryEntidade(){
 		Promocoes p = new Promocoes();
 		p.setValorDesconto(Integer.parseInt(txtValor.getText()));
 		return p;
 	}
 	
-	
-	@Override
-	public void start(Stage promocoesStage) throws Exception {
+	public PromocoesBoundary(Executor e) {
+		this.setExecutor(e);
 
-		BorderPane painelPrincipal = new BorderPane();
-		GridPane painelCampos = new GridPane();
-		FlowPane painelBotoes = new FlowPane();	
 		painelPrincipal.setStyle("-fx-padding:20px");
 		
 		Label labtitulo = new Label("GERENCIAR PROMOCOES");
@@ -62,7 +70,7 @@ public class PromocoesBoundary extends Application implements EventHandler<Actio
 		txtCodigoDesconto.setTooltip(new Tooltip("Cupom promocional gerado"));
 		txtCodigoDesconto.setEditable(false);
 
-		painelBotoes.getChildren().addAll(btnAplicarPromocoes, btnEnviarEmail);
+		painelBotoes.getChildren().addAll(btnAplicarPromocoes, btnEnviarEmail,btnMenu);
 		
 		painelPrincipal.setTop(labtitulo);
 		painelPrincipal.setCenter(painelCampos);
@@ -71,10 +79,12 @@ public class PromocoesBoundary extends Application implements EventHandler<Actio
 		btnAplicarPromocoes.addEventHandler(ActionEvent.ANY, this);
 		btnEnviarEmail.addEventHandler(ActionEvent.ANY, this);
 		
-		Scene cena = new Scene(painelPrincipal, 700, 500);
-		promocoesStage.setTitle("Promoções para clientes/quartos");
-		promocoesStage.setScene(cena);
-		promocoesStage.show();
+		btnMenu.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				executor.executar("Menu principal");
+			}
+		});
 	}
 
 	@Override
@@ -90,6 +100,25 @@ public class PromocoesBoundary extends Application implements EventHandler<Actio
 			
 		}
 		
+	}
+
+	@Override
+	public void setExecutor(Executor e) {
+		// TODO Auto-generated method stub
+		this.executor = e;
+
+	}
+
+	@Override
+	public Executor getExecutor() {
+		// TODO Auto-generated method stub
+		return this.executor;
+	}
+
+	@Override
+	public Pane gerarTela() {
+		// TODO Auto-generated method stub
+		return painelPrincipal;
 	}
 	
 }

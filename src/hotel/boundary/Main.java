@@ -1,11 +1,13 @@
 package hotel.boundary;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
 
-import com.sun.corba.se.impl.encoding.CodeSetConversion.BTCConverter;
-
-import hotel.control.MainMenuController;
+import hotel.interfaces.BoundaryContent;
+import hotel.interfaces.Executor;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,16 +21,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
-public class Main extends Application implements EventHandler<Event> {
-
-	private MainMenuController control = new MainMenuController();
+public class Main extends Application implements EventHandler<Event>, Executor{
 
 	private VBox box = new VBox();
 	private Label titulo = new Label("Menu principal");
@@ -38,15 +40,16 @@ public class Main extends Application implements EventHandler<Event> {
 	private Button btnFunc = new Button("Funcionarios");
 	private Button btnPromo = new Button("Promoções");
 	private Button btnEstoque = new Button("Estoque");
-
+	//private Button btnMenu = new Button("Menu principal");
+	private Map<String, BoundaryContent> telas = new HashMap<>();
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
-
 	@Override
 	public void start(Stage stage) {
-
-		box.setPrefSize(700.0, 550.0);
+		
+		box.setPrefSize(700.0, 650.0);
 		box.setAlignment(Pos.CENTER);
 		box.setSpacing(20); // 2
 		box.addEventHandler(ActionEvent.ANY, this);
@@ -55,43 +58,43 @@ public class Main extends Application implements EventHandler<Event> {
 		titulo.setFont(new Font(27));
 		box.getChildren().add(titulo);
 
-		DefBtn(btnHosp);
-		btnHosp.addEventHandler(ActionEvent.ANY, this);
-		DefBtn(btnQuarto);
-		btnQuarto.addEventHandler(ActionEvent.ANY, this);
-		DefBtn(btnCliente);
-		btnCliente.addEventHandler(ActionEvent.ANY, this);
-		DefBtn(btnFunc);
-		btnFunc.addEventHandler(ActionEvent.ANY, this);
-		DefBtn(btnPromo);
-		btnPromo.addEventHandler(ActionEvent.ANY, this);
-		DefBtn(btnEstoque);
-		btnEstoque.addEventHandler(ActionEvent.ANY, this);
-
+		gerartelas();
 		Scene scn = new Scene(box);
 		stage.setScene(scn);
 		stage.show();
+		executar("Menu principal");
 
 	}
+	public void gerartelas() {
 
-	private void DefBtn(Button btn) {
-		btn.setPrefSize(178, 47);
-		btn.setTextAlignment(TextAlignment.CENTER);
-		box.getChildren().add(btn);
+		// gerar as telas 
+	    telas.put("Menu principal", new MenuPrincipalBoundary(this));
+		telas.put(btnFunc.getText(), new FuncionarioBoundary(this));
+		telas.put(btnCliente.getText(), new ClienteBoundary(this));
+		telas.put(btnPromo.getText(), new PromocoesBoundary(this));
 	}
+
 
 	@Override
 	public void handle(Event event) {
-		if (event.getTarget().equals(btnCliente)) {
-			control.controlTelas(3);
-		} else if (event.getTarget().equals(btnFunc)){
-			control.controlTelas(4);
-		} else if (event.getTarget().equals(btnPromo)) {
-			control.controlTelas(5);
-		} else if (event.getTarget().equals(btnEstoque)) {
-			control.controlTelas(6);
+		if (event.getTarget() instanceof Button) {
+			Button n = (Button)event.getTarget();
+			String comando = n.getText();
+			executar(comando);
 		}
 
 	}
+
+	@Override
+	public void executar(String cmd) {
+		System.out.println("Executando comando " + cmd);
+		BoundaryContent tela = telas.get(cmd);
+		if (tela != null) { 
+			box.getChildren().clear();
+			box.getChildren().add(tela.gerarTela());
+		}
+	}
+
+
 
 }
