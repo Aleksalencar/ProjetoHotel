@@ -12,13 +12,13 @@ public class MainMenuController {
 		Stage stage = new Stage();
 		switch (i) {
 		case 3:
-			ClienteBoundary tela = new ClienteBoundary();
+			/*ClienteBoundary tela = new ClienteBoundary();
 			try {
 				tela.start(stage);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}
+			}*/
 			break;
 		case 4:
 			FuncionarioBoundary tela1 = new FuncionarioBoundary();

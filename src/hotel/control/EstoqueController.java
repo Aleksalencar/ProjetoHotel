@@ -30,8 +30,8 @@ public class EstoqueController {
 		p.setQtd(q);
 	}
 
-	public ObservableList<Produto> getLista() {
-		return (ObservableList<Produto>)lista;
+	public Set<Produto> getLista() {
+		return lista;
 	}
 
 }
