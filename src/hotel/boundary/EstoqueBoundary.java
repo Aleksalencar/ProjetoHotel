@@ -47,12 +47,13 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 	private Button btnAdicionar = new Button("Adicionar/Alterar");
 	private Button btnPesquisar = new Button("Pesquisar");
 	private Button btnMenu = new Button("Voltar");
-
+	private Button btnApagar = new Button("Apagar");
+	
 	GridPane grid = new GridPane();
 	private int rowIndex;
 
 	private VBox box = new VBox();
-	private TableView table = new TableView();
+	private TableView<Produto> table = new TableView<>();
 
 	private Executor executor;
 
@@ -74,13 +75,15 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 		AddLabel("Quantidade: ", txtQtd);
 		grid.add(btnAdicionar, 0, rowIndex);
 		grid.add(btnPesquisar, 1, rowIndex);
-		grid.add(btnMenu, 2, rowIndex);
+		grid.add(btnApagar, 2, rowIndex);
+		grid.add(btnMenu, 3, rowIndex);
 		box.getChildren().add(grid);
 
 		generateTable();
 		box.getChildren().add(table);
 		btnAdicionar.addEventHandler(ActionEvent.ANY, this);
 		btnPesquisar.addEventHandler(ActionEvent.ANY, this);
+		btnApagar.addEventHandler(ActionEvent.ANY, this);
 		btnMenu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -101,6 +104,7 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 	}
 
 	private void generateTable() {
+		
 		TableColumn<Produto, String> columnCodigo = new TableColumn<>("Código");
 		columnCodigo.setCellValueFactory(new PropertyValueFactory<Produto, String>("Código"));
 
@@ -124,6 +128,14 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 	public void handle(ActionEvent event) {
 		if (event.getTarget() == btnAdicionar) {
 			control.adicionar(boundaryParaEntidade());
+		}else if(event.getTarget() == btnApagar){
+			Produto prodselect = table.getSelectionModel().getSelectedItem();
+			control.apagar(prodselect.getCodigo());
+			atualizaDadosTabela();
+		}else if (event.getTarget() == btnPesquisar) {
+			String codProduto = txtCod.getText();
+			Produto prod = control.buscarProduto(codProduto);
+			entidadeParaBoundary(prod);			
 		}
 	}
 
@@ -144,17 +156,19 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 		return box;
 	}
 
-	// mover da entidade para a tela
-	private void entidadeParaBoundary(Produto p) {
-		if (p != null) {
-			txtCod.setText(p.getCodigo());
-			txtNome.setText(p.getNome());
-			txtDesc.setText(p.getDescricao());
-			txtValor.setText(String.valueOf(p.getValor()));
-			txtQtd.setText(String.valueOf(p.getQtd()));
-			System.out.println("cod ="+txtCod.getText());
-			System.out.println("qtd ="+txtQtd.getText());
-		}
+	private void atualizaDadosTabela() {
+		table.getItems().setAll(control.getLista());
+		limpar();
+	}
+	
+
+	private void limpar() {
+		table.getSelectionModel().select(null);
+		txtCod.setText(null);
+		txtDesc.setText(null);
+		txtNome.setText(null);
+		txtQtd.setText(null);
+		txtValor.setText(null);
 
 	}
 
@@ -172,5 +186,17 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 			e.printStackTrace();
 		}
 		return p;
+	}
+	private void entidadeParaBoundary(Produto p) {
+		if (p != null) {
+			txtCod.setText(p.getCodigo());
+			txtNome.setText(p.getNome());
+			txtDesc.setText(p.getDescricao());
+			txtValor.setText(String.valueOf(p.getValor()));
+			txtQtd.setText(String.valueOf(p.getQtd()));
+			System.out.println("cod ="+txtCod.getText());
+			System.out.println("qtd ="+txtQtd.getText());
+		}
+
 	}
 }

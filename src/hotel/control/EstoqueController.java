@@ -1,29 +1,32 @@
 package hotel.control;
 
-import java.util.HashSet;
-import java.util.Observable;
-import java.util.Set;
 
-import hotel.entidades.Funcionario;
+
 import hotel.entidades.Produto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 
 public class EstoqueController {
 	private ObservableList<Produto> lista = FXCollections.observableArrayList();
 	
 	
-	public void adicionar(Produto prod) {
-		getLista().add(prod);
+	public ObservableList<Produto> adicionar(Produto prod) {
+		System.out.println(prod.getCodigo());
+		if(lista.isEmpty()){
+			for(Produto p1 : lista ){
+				if(lista.contains(p1.getCodigo())){
+					return lista;
+				}
+			}
+		}	
+		lista.add(prod);
+		return lista;
 	}
 
 	public Produto buscarProduto(String cod) {
-		for (Produto prod : lista) {
-			if (cod.equals(prod.getCodigo())) {
-				return prod;
-			}
-		}
-		return null;
+		return lista.stream().filter(p -> p.getCodigo() == cod).findFirst()
+				.orElseThrow(() -> new Error("Conta não encontrada"));
 	}
 	
 	public void SetQtd(Produto p,int q) {
@@ -33,5 +36,12 @@ public class EstoqueController {
 	public ObservableList<Produto> getLista() {
 		return lista;
 	}
+
+	public void apagar(String codigo) {
+		Produto produto = buscarProduto(codigo);
+		lista.remove(produto.equals(produto));
+	}
+	
+
 
 }
