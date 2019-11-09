@@ -57,6 +57,7 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 		return c;
 	}
 	
+	@SuppressWarnings("static-access")	
 	public ClienteBoundary(Executor e) {
 		this.setExecutor(e);
 		
@@ -82,13 +83,14 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 		painelCampos.add(sexo, 2, 3);
 		painelCampos.add(new Label("Telefone"), 1, 4);
 		painelCampos.add(txtTelefone, 2, 4);
-		painelCampos.add(new Label("Endereço"), 1, 5);
+		painelCampos.add(new Label("EndereÃ§o"), 1, 5);
 		painelCampos.add(txtEnd, 2, 5);
 		painelCampos.add(new Label("CPF"), 1, 6);
 		painelCampos.add(txtCpf, 2, 6);
 
 		painelBotoes.getChildren().addAll(btnAdicionar, btnPesquisar,btnAlterar,btnMenu);
-
+		
+		painelPrincipal.setMargin(painelBotoes, new Insets(15));
 		painelPrincipal.setTop(labtitulo);
 		painelPrincipal.setCenter(painelCampos);
 		painelPrincipal.setBottom(painelBotoes);
