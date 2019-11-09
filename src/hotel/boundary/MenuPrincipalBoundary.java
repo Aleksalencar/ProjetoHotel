@@ -18,7 +18,9 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
 public class MenuPrincipalBoundary implements BoundaryContent, EventHandler<ActionEvent>{
@@ -38,10 +40,12 @@ public class MenuPrincipalBoundary implements BoundaryContent, EventHandler<Acti
 		box.setAlignment(Pos.CENTER);
 		box.setSpacing(20); // 2
 		box.addEventHandler(ActionEvent.ANY, this);
-	//	definirBackground();
+		definirBackground();
 
 		titulo.setTextAlignment(TextAlignment.CENTER);
-		titulo.setFont(new Font(27));
+		titulo.setFont(Font.font("Arial", FontWeight.BLACK, 30));
+		titulo.setTextFill(Color.CHARTREUSE);
+		titulo.setUnderline(true);
 		box.getChildren().add(titulo);
 
 		DefBtn(btnHosp);

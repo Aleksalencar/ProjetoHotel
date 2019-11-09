@@ -10,6 +10,7 @@ import hotel.entidades.Produto;
 import hotel.interfaces.BoundaryContent;
 import hotel.interfaces.Executor;
 import javafx.application.Application;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -80,6 +81,7 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 		box.getChildren().add(grid);
 
 		generateTable();
+		configuraTabela();
 
 		box.getChildren().add(table);
 		btnAdicionar.addEventHandler(ActionEvent.ANY, this);
@@ -91,6 +93,16 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 				executor.executar("Menu principal");
 			}
 		});
+	}
+
+	private void configuraTabela() {
+		BooleanBinding camposPreenchidos = txtCod.textProperty().isEmpty().or(txtDesc.textProperty().isEmpty())
+				.or(txtQtd.textProperty().isNull().or(txtQtd.textProperty().isNull()));
+		// indica se há algo selecionado na tabela
+		BooleanBinding algoSelecionado = table.getSelectionModel().selectedItemProperty().isNull();
+		// alguns botões só são habilitados se algo foi selecionado na tabela
+		btnApagar.disableProperty().bind(algoSelecionado);
+		
 	}
 
 	private void AddLabel(String s, TextField t) {
