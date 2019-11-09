@@ -62,7 +62,7 @@ public class FuncionarioBoundary implements BoundaryContent, EventHandler<Action
 		return func;
 	}
 	
-
+	@SuppressWarnings("static-access")	
 	public FuncionarioBoundary(Executor e) {
 		this.setExecutor(e);
 		
@@ -91,11 +91,11 @@ public class FuncionarioBoundary implements BoundaryContent, EventHandler<Action
 		painelCampos.add(sexo, 2, 3);
 		painelCampos.add(new Label("Telefone"), 1, 4);
 		painelCampos.add(txtTelefone, 2, 4);
-		painelCampos.add(new Label("Endereço"), 1, 5);
+		painelCampos.add(new Label("EndereÃ§o"), 1, 5);
 		painelCampos.add(txtEnd, 2, 5);
 		painelCampos.add(new Label("CPF"), 1, 6);
 		painelCampos.add(txtCpf, 2, 6);
-		painelCampos.add(new Label("Número"), 1, 7);
+		painelCampos.add(new Label("NÃºmero"), 1, 7);
 		painelCampos.add(txtNumero, 2, 7);
 		painelCampos.add(new Label("Login"), 1, 8);
 		painelCampos.add(txtLogin, 2, 8);
@@ -106,11 +106,11 @@ public class FuncionarioBoundary implements BoundaryContent, EventHandler<Action
 		
 		painelBotoes.getChildren().addAll(btnAdicionar, btnPesquisar,btnAlterar,btnMenu);
 		
-
-		
+		painelPrincipal.setMargin(painelBotoes, new Insets(15));
 		painelPrincipal.setTop(labtitulo);
 		painelPrincipal.setCenter(painelCampos);
 		painelPrincipal.setBottom(painelBotoes);
+		
 		btnAdicionar.addEventHandler(ActionEvent.ANY, this);
 		btnPesquisar.addEventHandler(ActionEvent.ANY, this);
 		btnAlterar.addEventHandler(ActionEvent.ANY, this);
