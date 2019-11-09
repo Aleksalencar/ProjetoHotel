@@ -66,7 +66,7 @@ public class FuncionarioBoundary implements BoundaryContent, EventHandler<Action
 	public FuncionarioBoundary(Executor e) {
 		this.setExecutor(e);
 		
-		painelPrincipal.setStyle("-fx-padding:20px");
+		painelPrincipal.setStyle("-fx-padding:5px");
 		
 		Label labtitulo = new Label("GERENCIAR FUNCIONARIO");
 		labtitulo.setUnderline(true);	
@@ -111,7 +111,6 @@ public class FuncionarioBoundary implements BoundaryContent, EventHandler<Action
 		painelPrincipal.setTop(labtitulo);
 		painelPrincipal.setCenter(painelCampos);
 		painelPrincipal.setBottom(painelBotoes);
-		
 		btnAdicionar.addEventHandler(ActionEvent.ANY, this);
 		btnPesquisar.addEventHandler(ActionEvent.ANY, this);
 		btnAlterar.addEventHandler(ActionEvent.ANY, this);

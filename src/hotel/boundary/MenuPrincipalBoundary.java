@@ -38,7 +38,7 @@ public class MenuPrincipalBoundary implements BoundaryContent, EventHandler<Acti
 		box.setAlignment(Pos.CENTER);
 		box.setSpacing(20); // 2
 		box.addEventHandler(ActionEvent.ANY, this);
-		definirBackground();
+	//	definirBackground();
 
 		titulo.setTextAlignment(TextAlignment.CENTER);
 		titulo.setFont(new Font(27));
@@ -71,6 +71,7 @@ public class MenuPrincipalBoundary implements BoundaryContent, EventHandler<Acti
         Background background = new Background(backgroundimage); 
         box.setBackground(background);
 	}
+	
 	@Override
 	public Pane gerarTela() {
 		// TODO Auto-generated method stub

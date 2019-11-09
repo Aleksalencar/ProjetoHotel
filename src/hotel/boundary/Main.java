@@ -46,7 +46,7 @@ public class Main extends Application implements EventHandler<Event>, Executor{
 		titulo.setFont(new Font(27));
 		box.getChildren().add(titulo);
 	
-		
+		box.setStyle("-fx-background-color: linear-gradient( from 0% 0% to 100% 100%, red 0%, silver 100%);");
 		gerartelas();
 		Scene scn = new Scene(box);
 		stage.setScene(scn);

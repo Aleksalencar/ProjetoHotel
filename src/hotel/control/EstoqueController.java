@@ -10,11 +10,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class EstoqueController {
-	private Set<Produto> lista = FXCollections.observableSet();
+	private ObservableList<Produto> lista = FXCollections.observableArrayList();
 	
 	
 	public void adicionar(Produto prod) {
-		lista.add(prod);
+		getLista().add(prod);
 	}
 
 	public Produto buscarProduto(String cod) {
@@ -30,7 +30,7 @@ public class EstoqueController {
 		p.setQtd(q);
 	}
 
-	public Set<Produto> getLista() {
+	public ObservableList<Produto> getLista() {
 		return lista;
 	}
 

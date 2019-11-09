@@ -1,6 +1,9 @@
 package hotel.boundary;
 
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import javax.swing.JOptionPane;
 
 
@@ -18,6 +21,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -48,7 +57,7 @@ public class PromocoesBoundary implements BoundaryContent, EventHandler<ActionEv
 		return p;
 	}
 	
-	public PromocoesBoundary(Executor e) {
+	public PromocoesBoundary(Executor e) throws FileNotFoundException {
 		this.setExecutor(e);
 
 		painelPrincipal.setStyle("-fx-padding:20px");
@@ -78,7 +87,8 @@ public class PromocoesBoundary implements BoundaryContent, EventHandler<ActionEv
 		
 		btnAplicarPromocoes.addEventHandler(ActionEvent.ANY, this);
 		btnEnviarEmail.addEventHandler(ActionEvent.ANY, this);
-		
+
+
 		btnMenu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -101,7 +111,7 @@ public class PromocoesBoundary implements BoundaryContent, EventHandler<ActionEv
 		}
 		
 	}
-
+	
 	@Override
 	public void setExecutor(Executor e) {
 		// TODO Auto-generated method stub

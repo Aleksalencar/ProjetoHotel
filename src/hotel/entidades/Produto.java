@@ -34,6 +34,7 @@ public class Produto {
 		return qtd;
 	}
 	public void setQtd(int qtd) {
+		System.out.println("qtd:"+qtd);
 		this.qtd = qtd;
 	}
 	private int qtd;
