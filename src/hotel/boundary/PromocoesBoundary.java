@@ -14,6 +14,7 @@ import hotel.interfaces.Executor;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -57,6 +58,7 @@ public class PromocoesBoundary implements BoundaryContent, EventHandler<ActionEv
 		return p;
 	}
 	
+	@SuppressWarnings("static-access")
 	public PromocoesBoundary(Executor e) throws FileNotFoundException {
 		this.setExecutor(e);
 
@@ -81,6 +83,7 @@ public class PromocoesBoundary implements BoundaryContent, EventHandler<ActionEv
 
 		painelBotoes.getChildren().addAll(btnAplicarPromocoes, btnEnviarEmail,btnMenu);
 		
+		painelPrincipal.setMargin(painelBotoes, new Insets(15));
 		painelPrincipal.setTop(labtitulo);
 		painelPrincipal.setCenter(painelCampos);
 		painelPrincipal.setBottom(painelBotoes);
