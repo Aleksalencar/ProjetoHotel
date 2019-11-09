@@ -130,9 +130,6 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 	public void handle(ActionEvent event) {
 		if (event.getTarget() == btnAdicionar) {
 			control.adicionar(boundaryParaEntidade());
-			String codProduto = txtCod.getText();
-			Produto prod = control.buscarProduto(codProduto);
-			entidadeParaBoundary(prod);
 		}else if(event.getTarget() == btnApagar){
 			Produto prodselect = table.getSelectionModel().getSelectedItem();
 			control.apagar(prodselect.getCodigo());
