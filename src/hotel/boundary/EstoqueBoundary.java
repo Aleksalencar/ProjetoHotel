@@ -145,7 +145,6 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 		}else if(event.getTarget() == btnApagar){
 			Produto prodselect = table.getSelectionModel().getSelectedItem();
 			control.apagar(prodselect.getCodigo());
-			atualizaDadosTabela();
 		}else if (event.getTarget() == btnPesquisar) {
 			String codProduto = txtCod.getText();
 			Produto prod = control.buscarProduto(codProduto);
@@ -168,13 +167,7 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 	public Pane gerarTela() {
 		// TODO Auto-generated method stub
 		return box;
-	}
-
-	private void atualizaDadosTabela() {
-		table.getItems().setAll(control.getLista());
-		limpar();
-	}
-	
+	}	
 
 	private void limpar() {
 		table.getSelectionModel().select(null);

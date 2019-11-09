@@ -25,8 +25,8 @@ public class EstoqueController {
 	}
 
 	public Produto buscarProduto(String cod) {
-		return lista.stream().filter(p -> p.getCodigo() == cod).findFirst()
-				.orElseThrow(() -> new Error("Conta não encontrada"));
+		return lista.stream().filter(p -> p.getCodigo().equals(cod)).findFirst()
+				.orElseThrow(() -> new Error("Produto nao encontrado"));
 	}
 	
 	public void SetQtd(Produto p,int q) {
