@@ -32,6 +32,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEvent> {
@@ -59,10 +60,10 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 		this.setExecutor(e);
 		box.setSpacing(5);
 
-		Label l = new Label("Estoque");
-		l.setFont(Font.font(30));
-		l.setAlignment(Pos.CENTER);
-		box.getChildren().add(l);
+		Label labtitulo = new Label("Estoque");
+		labtitulo.setUnderline(true);
+		labtitulo.setFont(Font.font("Arial", FontWeight.BLACK, 25));
+		box.getChildren().add(labtitulo);
 
 		grid.setHgap(50);
 		grid.setVgap(5);
