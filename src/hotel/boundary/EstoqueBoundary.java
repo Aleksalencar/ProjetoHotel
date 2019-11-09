@@ -80,6 +80,7 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 		box.getChildren().add(grid);
 
 		generateTable();
+
 		box.getChildren().add(table);
 		btnAdicionar.addEventHandler(ActionEvent.ANY, this);
 		btnPesquisar.addEventHandler(ActionEvent.ANY, this);
@@ -105,8 +106,9 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 
 	private void generateTable() {
 		
-		TableColumn<Produto, String> columnCodigo = new TableColumn<>("Código");
-		columnCodigo.setCellValueFactory(new PropertyValueFactory<Produto, String>("Código"));
+		
+		TableColumn<Produto, String> columnCodigo = new TableColumn<>("Codigo");
+		columnCodigo.setCellValueFactory(new PropertyValueFactory<Produto, String>("Codigo"));
 
 		TableColumn<Produto, String> columnNome = new TableColumn<>("Nome");
 		columnNome.setCellValueFactory(new PropertyValueFactory<Produto, String>("Nome"));
@@ -117,8 +119,8 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 		TableColumn<Produto, String> columnValor = new TableColumn<>("Valor");
 		columnValor.setCellValueFactory(new PropertyValueFactory<Produto, String>("Valor"));
 
-		TableColumn<Produto, String> columnQtd = new TableColumn<>("Quantidade");
-		columnQtd.setCellValueFactory(new PropertyValueFactory<Produto, String>("Quantidade"));
+		TableColumn<Produto, String> columnQtd = new TableColumn<>("qtd");
+		columnQtd.setCellValueFactory(new PropertyValueFactory<Produto, String>("qtd"));
 
 		table.getColumns().addAll(columnCodigo, columnNome, columnDescricao, columnValor, columnQtd);
 		table.setItems(control.getLista());
@@ -128,6 +130,9 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 	public void handle(ActionEvent event) {
 		if (event.getTarget() == btnAdicionar) {
 			control.adicionar(boundaryParaEntidade());
+			String codProduto = txtCod.getText();
+			Produto prod = control.buscarProduto(codProduto);
+			entidadeParaBoundary(prod);
 		}else if(event.getTarget() == btnApagar){
 			Produto prodselect = table.getSelectionModel().getSelectedItem();
 			control.apagar(prodselect.getCodigo());
