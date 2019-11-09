@@ -11,17 +11,17 @@ public class EstoqueController {
 	private ObservableList<Produto> lista = FXCollections.observableArrayList();
 	
 	
-	public ObservableList<Produto> adicionar(Produto prod) {
+	public Produto adicionar(Produto prod) {
 		System.out.println(prod.getCodigo());
 		if(lista.isEmpty()){
 			for(Produto p1 : lista ){
 				if(lista.contains(p1.getCodigo())){
-					return lista;
+					return p1;
 				}
 			}
 		}	
 		lista.add(prod);
-		return lista;
+		return null;
 	}
 
 	public Produto buscarProduto(String cod) {
@@ -39,7 +39,7 @@ public class EstoqueController {
 
 	public void apagar(String codigo) {
 		Produto produto = buscarProduto(codigo);
-		lista.remove(produto.equals(produto));
+		lista.remove(produto);
 	}
 	
 
