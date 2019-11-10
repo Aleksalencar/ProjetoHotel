@@ -29,7 +29,7 @@ public class EstoqueController {
 				.orElseThrow(() -> new Error("Produto nao encontrado"));
 	}
 	
-	public void SetQtd(Produto p,int q) {
+	public void SetQtd(Produto p,int q) throws Exception {
 		p.setQtd(q);
 	}
 

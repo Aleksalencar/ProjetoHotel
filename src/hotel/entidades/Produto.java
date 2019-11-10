@@ -37,7 +37,7 @@ public class Produto {
 		if (valor >= 0) {
 			this.valor = valor;
 		} else {
-			throw new Exception("Valor negativo");
+			throw new Exception("Valor invalidade");
 		}
 	}
 	public int getQtd() {
@@ -47,7 +47,7 @@ public class Produto {
 		if (qtd >= 0) {
 			this.qtd = qtd;
 		} else {
-			throw new Exception("Quantidade negativa");
+			throw new Exception("Quantidade invalida");
 		}			
 	}
 	 

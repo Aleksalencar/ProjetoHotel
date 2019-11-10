@@ -1,35 +1,20 @@
 package hotel.boundary;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-
 import hotel.control.EstoqueController;
 import hotel.entidades.Produto;
 import hotel.interfaces.BoundaryContent;
 import hotel.interfaces.Executor;
-import javafx.application.Application;
 import javafx.beans.binding.BooleanBinding;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -69,11 +54,11 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 
 		grid.setHgap(50);
 		grid.setVgap(5);
-		AddLabel("Codigo: ", txtCod);
+		AddLabel("*Codigo: ", txtCod);
 		AddLabel("Nome: ", txtNome);
 		AddLabel("Descrição: ", txtDesc);
-		AddLabel("Valor: ", txtValor);
-		AddLabel("Quantidade: ", txtQtd);
+		AddLabel("*Valor: ", txtValor);
+		AddLabel("*Quantidade: ", txtQtd);
 		grid.add(btnAdicionar, 0, rowIndex);
 		grid.add(btnPesquisar, 1, rowIndex);
 		grid.add(btnApagar, 2, rowIndex);
@@ -130,8 +115,8 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 		TableColumn<Produto, String> columnValor = new TableColumn<>("Valor");
 		columnValor.setCellValueFactory(new PropertyValueFactory<Produto, String>("Valor"));
 
-		TableColumn<Produto, String> columnQtd = new TableColumn<>("qtd");
-		columnQtd.setCellValueFactory(new PropertyValueFactory<Produto, String>("qtd"));
+		TableColumn<Produto, String> columnQtd = new TableColumn<>("Quantidade");
+		columnQtd.setCellValueFactory(new PropertyValueFactory<Produto, String>("Quantidade"));
 
 		table.getColumns().addAll(columnCodigo, columnNome, columnDescricao, columnValor, columnQtd);
 		table.setItems(control.getLista());
@@ -191,6 +176,11 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 			return p;
 		} catch (Exception e) {
 			e.printStackTrace();
+			MensagemErro erro = new MensagemErro();
+			try {
+				erro.start("Erro ao adicionar");
+			} catch (Exception e1) {
+			}
 		}
 		return null;
 	}
