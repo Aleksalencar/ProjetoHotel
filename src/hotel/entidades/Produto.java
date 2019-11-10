@@ -34,7 +34,7 @@ public class Produto {
 		return valor;
 	}
 	public void setValor(double valor) throws Exception {
-		if (qtd >= 0) {
+		if (valor >= 0) {
 			this.valor = valor;
 		} else {
 			throw new Exception("Valor negativo");
