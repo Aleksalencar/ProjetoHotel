@@ -47,7 +47,7 @@ public class MenuPrincipalBoundary implements BoundaryContent, EventHandler<Acti
 		titulo.setTextFill(Color.CHARTREUSE);
 		titulo.setUnderline(true);
 		box.getChildren().add(titulo);
-
+ 
 		DefBtn(btnHosp);
 		btnHosp.addEventHandler(ActionEvent.ANY, this);
 		DefBtn(btnQuarto);

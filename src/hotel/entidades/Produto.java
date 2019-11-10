@@ -5,12 +5,18 @@ public class Produto {
 	 private String nome;
 	 private String descricao;
 	 private double valor;
+	 private int qtd;
 	 
 	 public String getCodigo() {
 		return codigo;
 	}
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
+	public void setCodigo(String codigo) throws Exception {
+		if (!codigo.isEmpty()) {
+			this.codigo = codigo;
+		}else {
+			throw new Exception("Codigo vazio");
+		}
+				
 	}
 	public String getNome() {
 		return nome;
@@ -27,16 +33,22 @@ public class Produto {
 	public double getValor() {
 		return valor;
 	}
-	public void setValor(double valor) {
-		this.valor = valor;
+	public void setValor(double valor) throws Exception {
+		if (qtd >= 0) {
+			this.valor = valor;
+		} else {
+			throw new Exception("Valor negativo");
+		}
 	}
 	public int getQtd() {
 		return qtd;
 	}
-	public void setQtd(int qtd) {
-		System.out.println("qtd:"+qtd);
-		this.qtd = qtd;
+	public void setQtd(int qtd) throws Exception {
+		if (qtd >= 0) {
+			this.qtd = qtd;
+		} else {
+			throw new Exception("Quantidade negativa");
+		}			
 	}
-	private int qtd;
 	 
 }

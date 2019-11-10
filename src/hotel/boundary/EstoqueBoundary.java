@@ -49,7 +49,7 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 	private Button btnPesquisar = new Button("Pesquisar");
 	private Button btnMenu = new Button("Voltar");
 	private Button btnApagar = new Button("Apagar");
-	
+
 	GridPane grid = new GridPane();
 	private int rowIndex;
 
@@ -102,7 +102,7 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 		BooleanBinding algoSelecionado = table.getSelectionModel().selectedItemProperty().isNull();
 		// alguns botões só são habilitados se algo foi selecionado na tabela
 		btnApagar.disableProperty().bind(algoSelecionado);
-		
+
 	}
 
 	private void AddLabel(String s, TextField t) {
@@ -117,8 +117,7 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 	}
 
 	private void generateTable() {
-		
-		
+
 		TableColumn<Produto, String> columnCodigo = new TableColumn<>("Codigo");
 		columnCodigo.setCellValueFactory(new PropertyValueFactory<Produto, String>("Codigo"));
 
@@ -142,13 +141,13 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 	public void handle(ActionEvent event) {
 		if (event.getTarget() == btnAdicionar) {
 			control.adicionar(boundaryParaEntidade());
-		}else if(event.getTarget() == btnApagar){
+		} else if (event.getTarget() == btnApagar) {
 			Produto prodselect = table.getSelectionModel().getSelectedItem();
 			control.apagar(prodselect.getCodigo());
-		}else if (event.getTarget() == btnPesquisar) {
+		} else if (event.getTarget() == btnPesquisar) {
 			String codProduto = txtCod.getText();
 			Produto prod = control.buscarProduto(codProduto);
-			entidadeParaBoundary(prod);			
+			entidadeParaBoundary(prod);
 		}
 	}
 
@@ -167,7 +166,7 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 	public Pane gerarTela() {
 		// TODO Auto-generated method stub
 		return box;
-	}	
+	}
 
 	private void limpar() {
 		table.getSelectionModel().select(null);
@@ -189,11 +188,13 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 			p.setValor(Double.parseDouble(txtValor.getText()));
 			p.setQtd(Integer.parseInt(txtQtd.getText()));
 			System.out.println("Produto adicionado");
+			return p;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return p;
+		return null;
 	}
+
 	private void entidadeParaBoundary(Produto p) {
 		if (p != null) {
 			txtCod.setText(p.getCodigo());
@@ -201,8 +202,8 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 			txtDesc.setText(p.getDescricao());
 			txtValor.setText(String.valueOf(p.getValor()));
 			txtQtd.setText(String.valueOf(p.getQtd()));
-			System.out.println("cod ="+txtCod.getText());
-			System.out.println("qtd ="+txtQtd.getText());
+			System.out.println("cod =" + txtCod.getText());
+			System.out.println("qtd =" + txtQtd.getText());
 		}
 
 	}
