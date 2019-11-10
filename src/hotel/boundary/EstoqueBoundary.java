@@ -1,5 +1,8 @@
 package hotel.boundary;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import hotel.control.EstoqueController;
 import hotel.entidades.Produto;
 import hotel.interfaces.BoundaryContent;
@@ -14,6 +17,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -24,6 +33,10 @@ import javafx.stage.Stage;
 public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEvent> {
 
 	private EstoqueController control = new EstoqueController();
+
+	private VBox box = new VBox();
+	GridPane grid = new GridPane();
+	
 	private TextField txtCod = new TextField();
 	private TextField txtNome = new TextField();
 	private TextField txtDesc = new TextField();
@@ -35,11 +48,9 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 	private Button btnMenu = new Button("Voltar");
 	private Button btnApagar = new Button("Apagar");
 
-	GridPane grid = new GridPane();
-	private int rowIndex;
-
-	private VBox box = new VBox();
 	private TableView<Produto> table = new TableView<>();
+
+	private int rowIndex;
 
 	private Executor executor;
 
@@ -67,7 +78,7 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 
 		generateTable();
 		configuraTabela();
-
+		
 		box.getChildren().add(table);
 		btnAdicionar.addEventHandler(ActionEvent.ANY, this);
 		btnPesquisar.addEventHandler(ActionEvent.ANY, this);
@@ -115,24 +126,34 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 		TableColumn<Produto, String> columnValor = new TableColumn<>("Valor");
 		columnValor.setCellValueFactory(new PropertyValueFactory<Produto, String>("Valor"));
 
+<<<<<<< HEAD
 		TableColumn<Produto, String> columnQtd = new TableColumn<>("Quantidade");
 		columnQtd.setCellValueFactory(new PropertyValueFactory<Produto, String>("Quantidade"));
+		
+=======
+		TableColumn<Produto, String> columnQtd = new TableColumn<>("qtd");
+		columnQtd.setCellValueFactory(new PropertyValueFactory<Produto, String>("qtd"));
 
+>>>>>>> 10707ebde29bbfdd6eb61a615c6da3f227592509
 		table.getColumns().addAll(columnCodigo, columnNome, columnDescricao, columnValor, columnQtd);
 		table.setItems(control.getLista());
+		
 	}
 
 	@Override
 	public void handle(ActionEvent event) {
 		if (event.getTarget() == btnAdicionar) {
 			control.adicionar(boundaryParaEntidade());
+		
 		} else if (event.getTarget() == btnApagar) {
 			Produto prodselect = table.getSelectionModel().getSelectedItem();
 			control.apagar(prodselect.getCodigo());
+		
 		} else if (event.getTarget() == btnPesquisar) {
 			String codProduto = txtCod.getText();
 			Produto prod = control.buscarProduto(codProduto);
 			entidadeParaBoundary(prod);
+		
 		}
 	}
 
@@ -176,8 +197,9 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 			return p;
 		} catch (Exception e) {
 			e.printStackTrace();
-			MensagemErro erro = new MensagemErro();
+			MensagemErroBoundary erro = new MensagemErroBoundary();
 			try {
+			
 				erro.start("Erro ao adicionar");
 			} catch (Exception e1) {
 			}
@@ -195,6 +217,19 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 			System.out.println("cod =" + txtCod.getText());
 			System.out.println("qtd =" + txtQtd.getText());
 		}
-
+	}
+	
+	public void definirBackground() throws FileNotFoundException{
+		FileInputStream imagem = new FileInputStream("src/hotel/images/estoque.jpg");
+		Image image = new Image(imagem); 
+	    
+		BackgroundImage backgroundimage = new BackgroundImage(image,
+	    		BackgroundRepeat.NO_REPEAT,  
+	    		BackgroundRepeat.NO_REPEAT,  
+	    		BackgroundPosition.DEFAULT,  
+	    		BackgroundSize.DEFAULT); 
+        
+	    Background background = new Background(backgroundimage); 
+        box.setBackground(background);
 	}
 }

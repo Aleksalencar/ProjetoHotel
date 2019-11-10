@@ -65,7 +65,7 @@ public class MenuPrincipalBoundary implements BoundaryContent, EventHandler<Acti
 	}
 	
 	public void definirBackground() throws FileNotFoundException{
-		FileInputStream imagem = new FileInputStream("src/hotel/images/menu.jpg");
+		FileInputStream imagem = new FileInputStream("src/hotel/images/estoque.jpg");
 		Image image = new Image(imagem); 
 	    BackgroundImage backgroundimage = new BackgroundImage(image,  
 	                                     BackgroundRepeat.NO_REPEAT,  
