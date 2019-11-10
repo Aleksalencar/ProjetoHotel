@@ -176,7 +176,7 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 			return p;
 		} catch (Exception e) {
 			e.printStackTrace();
-			MensagemErro erro = new MensagemErro();
+			MensagemErroBoundary erro = new MensagemErroBoundary();
 			try {
 				erro.start("Erro ao adicionar");
 			} catch (Exception e1) {

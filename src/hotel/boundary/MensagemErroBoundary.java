@@ -9,27 +9,27 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class MensagemErro implements EventHandler<ActionEvent> {
+public class MensagemErroBoundary implements EventHandler<ActionEvent> {
 	Button btnOK = new Button("OK");
 	Stage palco;
-	
+
 	public void start(String s) throws Exception {
 		Stage palco = new Stage();
 		btnOK.addEventHandler(ActionEvent.ANY, this);
 
 		VBox raiz = new VBox();
 		Label lblMensagem = new Label(s);
-	
+
 		raiz.setAlignment(Pos.BASELINE_CENTER);
 		raiz.setSpacing(20);
-		raiz.getChildren().add(lblMensagem); 
+		raiz.getChildren().add(lblMensagem);
 		raiz.getChildren().add(btnOK);
-		
+
 		Scene cena = new Scene(raiz, 300, 100);
-		palco.setTitle("Mensagem erro"); 
-		palco.setScene(cena); 
+		palco.setTitle("Mensagem erro");
+		palco.setScene(cena);
 		palco.show();
-		
+
 		this.palco = palco;
 	}
 
