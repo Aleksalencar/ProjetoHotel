@@ -11,6 +11,7 @@ public class EstoqueController {
 	private ObservableList<Produto> lista = FXCollections.observableArrayList();
 	
 	
+	@SuppressWarnings("unlikely-arg-type")
 	public Produto adicionar(Produto prod) {
 		System.out.println(prod.getCodigo());
 		if(lista.isEmpty()){
