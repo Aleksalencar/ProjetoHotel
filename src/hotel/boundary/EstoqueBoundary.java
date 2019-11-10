@@ -115,8 +115,8 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 		TableColumn<Produto, String> columnValor = new TableColumn<>("Valor");
 		columnValor.setCellValueFactory(new PropertyValueFactory<Produto, String>("Valor"));
 
-		TableColumn<Produto, String> columnQtd = new TableColumn<>("Quantidade");
-		columnQtd.setCellValueFactory(new PropertyValueFactory<Produto, String>("Quantidade"));
+		TableColumn<Produto, String> columnQtd = new TableColumn<>("qtd");
+		columnQtd.setCellValueFactory(new PropertyValueFactory<Produto, String>("qtd"));
 
 		table.getColumns().addAll(columnCodigo, columnNome, columnDescricao, columnValor, columnQtd);
 		table.setItems(control.getLista());
