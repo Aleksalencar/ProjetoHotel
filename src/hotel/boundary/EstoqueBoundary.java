@@ -54,6 +54,8 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 
 	private Executor executor;
 
+	private boolean addAll;
+
 	public EstoqueBoundary(Executor e) {
 		this.setExecutor(e);
 		box.setSpacing(5);
@@ -126,16 +128,12 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 		TableColumn<Produto, String> columnValor = new TableColumn<>("Valor");
 		columnValor.setCellValueFactory(new PropertyValueFactory<Produto, String>("Valor"));
 
-<<<<<<< HEAD
+
 		TableColumn<Produto, String> columnQtd = new TableColumn<>("Quantidade");
-		columnQtd.setCellValueFactory(new PropertyValueFactory<Produto, String>("Quantidade"));
-		
-=======
-		TableColumn<Produto, String> columnQtd = new TableColumn<>("qtd");
 		columnQtd.setCellValueFactory(new PropertyValueFactory<Produto, String>("qtd"));
 
->>>>>>> 10707ebde29bbfdd6eb61a615c6da3f227592509
-		table.getColumns().addAll(columnCodigo, columnNome, columnDescricao, columnValor, columnQtd);
+
+		addAll = table.getColumns().addAll(columnCodigo, columnNome, columnDescricao, columnValor, columnQtd);
 		table.setItems(control.getLista());
 		
 	}
