@@ -24,6 +24,7 @@ public class Main extends Application implements EventHandler<Event>, Executor{
 
 	private VBox box = new VBox();
 	private Label titulo = new Label("Menu principal");
+<<<<<<< Updated upstream
 	private Button btnHosp = new Button("Hospedagens");
 	private Button btnQuarto = new Button("Quartos");
 	private Button btnCliente = new Button("Clientes");
@@ -32,6 +33,15 @@ public class Main extends Application implements EventHandler<Event>, Executor{
 	private Button btnEstoque = new Button("Estoque");
 	//private Button btnMenu = new Button("Menu principal");
 	private Map<String, BoundaryContent> telas = new HashMap<>();
+=======
+	private String btnHosp = "Hospedagens";
+	private String btnQuarto = "Quartos";
+	private String btnCliente = "Clientes";
+	private String btnFunc = "Funcionarios";
+	private String btnPromo = "Promoções";
+	private String btnEstoque = "Estoque";
+
+>>>>>>> Stashed changes
 
 	public static void main(String[] args) {
 		launch(args);
@@ -56,6 +66,7 @@ public class Main extends Application implements EventHandler<Event>, Executor{
 	}
 	public void gerartelas() throws FileNotFoundException {
 
+<<<<<<< Updated upstream
 		// gerar as telas 
 	    telas.put("Menu principal", new MenuPrincipalBoundary(this));
 		telas.put(btnFunc.getText(), new FuncionarioBoundary(this));
@@ -65,6 +76,9 @@ public class Main extends Application implements EventHandler<Event>, Executor{
 	}
 
 
+=======
+	
+>>>>>>> Stashed changes
 	@Override
 	public void handle(Event event) {
 		if (event.getTarget() instanceof Button) {
@@ -75,6 +89,7 @@ public class Main extends Application implements EventHandler<Event>, Executor{
 
 	}
 
+<<<<<<< Updated upstream
 	@Override
 	public void executar(String cmd) {
 		System.out.println("Executando comando " + cmd);
@@ -83,6 +98,14 @@ public class Main extends Application implements EventHandler<Event>, Executor{
 			box.getChildren().clear();
 			box.getChildren().add(tela.gerarTela());
 		}
+=======
+
+	}
+
+	@Override
+	public void executar(String cmd) {
+	
+>>>>>>> Stashed changes
 	}
 
 
