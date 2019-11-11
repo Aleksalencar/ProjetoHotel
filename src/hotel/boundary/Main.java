@@ -82,15 +82,19 @@ public class Main extends Application implements EventHandler<Event>, Executor{
 
 	}
 	public void definirBackground(String imageName) throws FileNotFoundException{
-		FileInputStream imagem = new FileInputStream("src/hotel/images/"+imageName+".jpg");
+		String path="src/hotel/images/"+imageName+".jpg";
+		System.out.println(path);
+		FileInputStream imagem = new FileInputStream(path);
+		System.out.println("path:"+imagem);
 		Image image = new Image(imagem); 
 		BackgroundSize size = new BackgroundSize(box.getWidth(),box.getHeight(),true,true,true,true);
-	    BackgroundImage backgroundimage = new BackgroundImage
-	    		(image,  
+	    BackgroundImage backgroundimage = new BackgroundImage(
+	    		image,  
 	            BackgroundRepeat.NO_REPEAT,  
 	            BackgroundRepeat.NO_REPEAT,  
 	            BackgroundPosition.DEFAULT,  
-	            size); 
+	            size)
+	    		;
         Background background = new Background(backgroundimage); 
         box.setBackground(background);
 	}
