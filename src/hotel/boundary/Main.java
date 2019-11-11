@@ -37,7 +37,7 @@ public class Main extends Application implements EventHandler<Event>, Executor {
 	private String btnQuarto = "Quartos";
 	private String btnCliente = "Clientes";
 	private String btnFunc = "Funcionarios";
-	private String btnPromo = "Promoções";
+	private String btnPromo = "Promocoes";
 	private String btnEstoque = "Estoque";
 	private Map<String, BoundaryContent> telas = new HashMap<>();
 

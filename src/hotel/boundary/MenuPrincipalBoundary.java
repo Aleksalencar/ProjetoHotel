@@ -29,7 +29,7 @@ public class MenuPrincipalBoundary implements BoundaryContent, EventHandler<Acti
 	private Button btnQuarto = new Button("Quartos");
 	private Button btnCliente = new Button("Clientes");
 	private Button btnFunc = new Button("Funcionarios");
-	private Button btnPromo = new Button("Promoções");
+	private Button btnPromo = new Button("Promocoes");
 	private Button btnEstoque = new Button("Estoque");
 	private VBox box = new VBox();
 	private Executor executor;
