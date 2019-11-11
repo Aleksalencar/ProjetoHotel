@@ -40,7 +40,6 @@ public class MenuPrincipalBoundary implements BoundaryContent, EventHandler<Acti
 		box.setAlignment(Pos.CENTER);
 		box.setSpacing(20); // 2
 		box.addEventHandler(ActionEvent.ANY, this);
-		definirBackground();
 
 		titulo.setTextAlignment(TextAlignment.CENTER);
 		titulo.setFont(Font.font("Arial", FontWeight.BLACK, 30));
@@ -64,17 +63,7 @@ public class MenuPrincipalBoundary implements BoundaryContent, EventHandler<Acti
 		
 	}
 	
-	public void definirBackground() throws FileNotFoundException{
-		FileInputStream imagem = new FileInputStream("src/hotel/images/menu.jpg");
-		Image image = new Image(imagem); 
-	    BackgroundImage backgroundimage = new BackgroundImage(image,  
-	                                     BackgroundRepeat.NO_REPEAT,  
-	                                     BackgroundRepeat.NO_REPEAT,  
-	                                     BackgroundPosition.DEFAULT,  
-	                                        BackgroundSize.DEFAULT); 
-        Background background = new Background(backgroundimage); 
-        box.setBackground(background);
-	}
+
 	
 	@Override
 	public Pane gerarTela() {

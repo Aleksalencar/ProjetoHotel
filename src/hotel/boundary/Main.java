@@ -1,5 +1,6 @@
 package hotel.boundary;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +16,12 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -46,7 +53,7 @@ public class Main extends Application implements EventHandler<Event>, Executor{
 		titulo.setFont(new Font(27));
 		box.getChildren().add(titulo);
 	
-		box.setStyle("-fx-background-color: linear-gradient( from 0% 0% to 100% 100%, white 0%, silver 100%);");
+		//box.setStyle("-fx-background-color: linear-gradient( from 0% 0% to 100% 100%, white 0%, silver 100%);");
 		gerartelas();
 		Scene scn = new Scene(box);
 		stage.setScene(scn);
@@ -74,6 +81,19 @@ public class Main extends Application implements EventHandler<Event>, Executor{
 		}
 
 	}
+	public void definirBackground(String imageName) throws FileNotFoundException{
+		FileInputStream imagem = new FileInputStream("src/hotel/images/"+imageName+".jpg");
+		Image image = new Image(imagem); 
+		BackgroundSize size = new BackgroundSize(box.getWidth(),box.getHeight(),true,true,true,true);
+	    BackgroundImage backgroundimage = new BackgroundImage
+	    		(image,  
+	            BackgroundRepeat.NO_REPEAT,  
+	            BackgroundRepeat.NO_REPEAT,  
+	            BackgroundPosition.DEFAULT,  
+	            size); 
+        Background background = new Background(backgroundimage); 
+        box.setBackground(background);
+	}
 
 	@Override
 	public void executar(String cmd) {
@@ -81,6 +101,11 @@ public class Main extends Application implements EventHandler<Event>, Executor{
 		BoundaryContent tela = telas.get(cmd);
 		if (tela != null) { 
 			box.getChildren().clear();
+			try {
+				definirBackground(cmd);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 			box.getChildren().add(tela.gerarTela());
 		}
 	}
