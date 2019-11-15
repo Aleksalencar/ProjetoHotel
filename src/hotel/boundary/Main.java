@@ -12,26 +12,23 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 
 public class Main extends Application implements EventHandler<Event>, Executor {
 
-	private TilePane pane = new TilePane();
-	private VBox box = new VBox();
+	private TilePane window = new TilePane();
+	private Pane pane = new Pane();
 	private Label titulo = new Label("Menu principal");
 	private String btnHosp = "Hospedagens";
 	private String btnQuarto = "Quartos";
@@ -47,21 +44,29 @@ public class Main extends Application implements EventHandler<Event>, Executor {
 
 	@Override
 	public void start(Stage stage) throws FileNotFoundException {
-		pane.setPrefSize(700.0, 650.0);
-		pane.setAlignment(Pos.CENTER);
-		pane.addEventHandler(ActionEvent.ANY, this);
+		window.setPrefSize(700.0, 650.0);
+		window.setAlignment(Pos.CENTER);
+		window.addEventHandler(ActionEvent.ANY, this);
 
 		comandoTelas();
-		pane.getChildren().add(box);
-		Scene scn = new Scene(pane);
+		
+		definirBackgroundCampos();
+		
+		window.getChildren().add(pane);
+		Scene scn = new Scene(window);
+		stage.setTitle("Controle de hotel");
 		stage.setScene(scn);
 		stage.show();
 		executar("Menu principal");
 
 	}
 
-	public void comandoTelas() throws FileNotFoundException {
+	private void definirBackgroundCampos() {
+		pane.setStyle("-fx-background-color:transparent; -fx-background-insets: -10px; -fx-background-border-color:blue -1px-solid-blue;");
+		
+	}
 
+	public void comandoTelas() throws FileNotFoundException {
 		// gerar as telas
 		telas.put("Menu principal", new MenuPrincipalBoundary(this));
 		telas.put(btnFunc, new FuncionarioBoundary(this));
@@ -84,13 +89,12 @@ public class Main extends Application implements EventHandler<Event>, Executor {
 		String path = "src/hotel/images/" + imageName + ".jpg";
 		System.out.println(path);
 		FileInputStream imagem = new FileInputStream(path);
-		System.out.println("path:" + imagem);
 		Image image = new Image(imagem);
-		BackgroundSize size = new BackgroundSize(box.getWidth(), box.getHeight(), true, true, true, true);
+		BackgroundSize size = new BackgroundSize(pane.getWidth(), pane.getHeight(), true, true, true, true);
 		BackgroundImage backgroundimage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, size);
 		Background background = new Background(backgroundimage);
-		pane.setBackground(background);
+		window.setBackground(background);
 	}
 
 	@Override
@@ -98,14 +102,13 @@ public class Main extends Application implements EventHandler<Event>, Executor {
 		System.out.println("Executando comando " + cmd);
 		BoundaryContent tela = telas.get(cmd);
 		if (tela != null) {
-			box.getChildren().clear();
+			pane.getChildren().clear();
 			try {
 				definirBackground(cmd);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
-			box.getChildren().add(tela.gerarTela());
+			pane.getChildren().add(tela.gerarTela());
 		}
 	}
-
 }
