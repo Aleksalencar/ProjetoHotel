@@ -84,8 +84,12 @@ public class PromocoesBoundary implements BoundaryContent, EventHandler<ActionEv
 		painelPrincipal.setBottom(painelBotoes);
 
 		btnAplicarPromocoes.addEventHandler(ActionEvent.ANY, this);
-		btnEnviarEmail.addEventHandler(ActionEvent.ANY, this);
-
+		btnEnviarEmail.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				executor.executar("Email Enviar");
+			}
+		});
 		btnMenu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -101,13 +105,8 @@ public class PromocoesBoundary implements BoundaryContent, EventHandler<ActionEv
 			retorno = promoControl.generateToken(Integer.parseInt((txtValor.getText())));
 			if (retorno != null) {
 				txtCodigoDesconto.setText(retorno);
-				JOptionPane.showMessageDialog(null, "Codigo de desconto gerado com sucesso", "AVISO",
-						JOptionPane.INFORMATION_MESSAGE);
 			}
-		} else if (event.getTarget() == btnEnviarEmail) {
-
 		}
-
 	}
 
 	@Override
