@@ -1,50 +1,81 @@
 package hotel.boundary;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.stage.Stage;
+import javafx.scene.web.WebView;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
 
-public class emailBoundary extends Application{
-	private TextField txtHostServer = new TextField();
-	private TextField txtUsername = new TextField();
-	private PasswordField txtSenha = new PasswordField();
-	private TextField txtEmail = new TextField();
-	private TextField txtPara = new TextField();
-	private TextField txtDe = new TextField();
-	private TextField txtAssunto = new TextField();
-	private TextArea  txtMensagem = new TextArea();
-	private javafx.scene.control.Button btnEnviarEmail = new javafx.scene.control.Button("Enviar");
-	
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		BorderPane painelPrincipal = new BorderPane();
-		GridPane painelCampos = new GridPane();
-		FlowPane painelBotoes = new FlowPane();	
-		painelPrincipal.setStyle("-fx-padding:20px");
+import java.io.FileNotFoundException;
+import java.util.stream.Stream;
+
+import hotel.interfaces.BoundaryContent;
+import hotel.interfaces.Executor;
+
+public class emailBoundary implements BoundaryContent, EventHandler<ActionEvent>  {
+	private Button btnMenu = new Button("Voltar");
+	private HBox raiz = new HBox(20);
+	private Executor executor;
+	final String[] sites = {"javafx.com", "java.com",
+			"google.com" };
+
+	public emailBoundary(Executor e) {
+		this.setExecutor(e);
 		
-		Label labtitulo = new Label("GERENCIAR PROMOCOES");
-		labtitulo.setUnderline(true);	
+		Label labtitulo = new Label("Navegador hotel");
+		labtitulo.setUnderline(true);
 		labtitulo.setFont(Font.font("Arial", FontWeight.BLACK, 25));
 		
-		painelBotoes.setHgap(15);
-		painelCampos.setHgap(5);
-		painelCampos.setVgap(15);
+		ListView<String> listaSites = new ListView<>();
+		WebView webView = new WebView();
+		Stream.of(sites).forEach(listaSites.getItems()::add);
+	
+		listaSites.getSelectionModel().selectedItemProperty().addListener(
+				(obs, o, n) -> {
+					if(n != null) webView.getEngine().load("http://" + n);
+		});
 		
-		painelCampos.add(new Label("Assunto"), 0, 3);
-		painelCampos.add(txtAssunto, 0, 4);
-		painelCampos.add(new Label("Email de destino"), 0, 5);
-		painelCampos.add(txtEmail, 0, 6);
-		painelCampos.add(new Label("Senha"), 0, 7);
-		
+		listaSites.disableProperty().bind(webView.getEngine().getLoadWorker().runningProperty());
+	
+		raiz.getChildren().addAll(listaSites, webView,btnMenu);
+		btnMenu.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				executor.executar("Promocoes");
+			}
+		});
+	}
+
+	@Override
+	public void handle(ActionEvent event) {
+		// TODO Auto-generated method stub
 		
 	}
-	
+	@Override
+	public void setExecutor(Executor e) {
+		// TODO Auto-generated method stub
+		this.executor = e;
+	}
+
+	@Override
+	public Executor getExecutor() {
+		// TODO Auto-generated method stub
+		return this.executor;
+	}
+
+	@Override
+	public Pane gerarTela() {
+		// TODO Auto-generated method stub
+		return raiz;
+	}
+
+
 }
