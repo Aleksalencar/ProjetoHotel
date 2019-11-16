@@ -3,6 +3,8 @@ package hotel.boundary;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import com.sun.prism.paint.Color;
+
 import hotel.control.EstoqueController;
 import hotel.entidades.Produto;
 import hotel.interfaces.BoundaryContent;
@@ -26,6 +28,7 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -106,6 +109,8 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 	private void AddLabel(String s, TextField t) {
 		t.setMinWidth(200);
 		Label l = new Label(s);
+		l.setFont(Font.font("Arial", FontWeight.BLACK, 12));
+		//l.setTextFill(Color.CHARTREUSE);
 		l.setFont(Font.font(15));
 		t.setAlignment(Pos.CENTER_LEFT);
 		grid.add(l, 0, rowIndex);

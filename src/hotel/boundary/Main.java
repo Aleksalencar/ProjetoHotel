@@ -62,7 +62,7 @@ public class Main extends Application implements EventHandler<Event>, Executor {
 	}
 
 	private void definirBackgroundCampos() {
-		pane.setStyle("-fx-background-color:transparent; -fx-background-insets: -10px; -fx-background-border-color:blue -1px-solid-blue;");
+		pane.setStyle("-fx-background-color:rgba(0, 0, 0, 0.5);-fx-background-radius: 10;-fx-background-insets: -10px;");
 		
 	}
 
