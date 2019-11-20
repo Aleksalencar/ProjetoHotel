@@ -96,7 +96,7 @@ public class FuncionarioBoundary implements BoundaryContent, EventHandler<Action
 		painelCampos.add(txtEnd, 2, 5);
 		painelCampos.add(new Label("CPF"), 1, 6);
 		painelCampos.add(txtCpf, 2, 6);
-		painelCampos.add(new Label("Número"), 1, 7);
+		painelCampos.add(new Label("Numero"), 1, 7);
 		painelCampos.add(txtNumero, 2, 7);
 		painelCampos.add(new Label("Login"), 1, 8);
 		painelCampos.add(txtLogin, 2, 8);

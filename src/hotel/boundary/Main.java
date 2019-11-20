@@ -44,7 +44,7 @@ public class Main extends Application implements EventHandler<Event>, Executor {
 
 	@Override
 	public void start(Stage stage) throws FileNotFoundException {
-		window.setPrefSize(700.0, 650.0);
+		window.setPrefSize(850.0, 690.0);
 		window.setAlignment(Pos.CENTER);
 		window.addEventHandler(ActionEvent.ANY, this);
 
@@ -62,7 +62,7 @@ public class Main extends Application implements EventHandler<Event>, Executor {
 	}
 
 	private void definirBackgroundCampos() {
-		pane.setStyle("-fx-background-color:rgba(0, 0, 0, 0.5);-fx-background-radius: 10;-fx-background-insets: -10px;");
+		pane.setStyle("-fx-background-color:rgba(241, 238, 238, 0.6);-fx-background-radius: 10;-fx-background-insets: -10px;");
 		
 	}
 
@@ -74,6 +74,7 @@ public class Main extends Application implements EventHandler<Event>, Executor {
 		telas.put(btnPromo, new PromocoesBoundary(this));
 		telas.put(btnEstoque, new EstoqueBoundary(this));
 		telas.put("Email Enviar", new emailBoundary(this));
+		telas.put(btnQuarto, new QuartoBoundary(this));
 	}
 
 	@Override
