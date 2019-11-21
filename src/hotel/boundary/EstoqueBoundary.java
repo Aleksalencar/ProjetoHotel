@@ -13,6 +13,7 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -39,7 +40,7 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 
 	private VBox box = new VBox();
 	GridPane grid = new GridPane();
-	
+
 	private TextField txtCod = new TextField();
 	private TextField txtNome = new TextField();
 	private TextField txtDesc = new TextField();
@@ -83,7 +84,7 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 
 		generateTable();
 		configuraTabela();
-		
+
 		box.getChildren().add(table);
 		btnAdicionar.addEventHandler(ActionEvent.ANY, this);
 		btnPesquisar.addEventHandler(ActionEvent.ANY, this);
@@ -110,7 +111,7 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 		t.setMinWidth(200);
 		Label l = new Label(s);
 		l.setFont(Font.font("Arial", FontWeight.BLACK, 12));
-		//l.setTextFill(Color.CHARTREUSE);
+		// l.setTextFill(Color.CHARTREUSE);
 		l.setFont(Font.font(15));
 		t.setAlignment(Pos.CENTER_LEFT);
 		grid.add(l, 0, rowIndex);
@@ -121,42 +122,40 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 
 	private void generateTable() {
 
-		TableColumn<Produto, String> columnCodigo = new TableColumn<>("Codigo");
-		columnCodigo.setCellValueFactory(new PropertyValueFactory<Produto, String>("Codigo"));
+		TableColumn<Produto, String> coluna1 = new TableColumn<>("Codigo");
+		coluna1.setCellValueFactory(new PropertyValueFactory<Produto, String>("Codigo"));
 
-		TableColumn<Produto, String> columnNome = new TableColumn<>("Nome");
-		columnNome.setCellValueFactory(new PropertyValueFactory<Produto, String>("Nome"));
+		TableColumn<Produto, String> coluna2 = new TableColumn<>("Nome");
+		coluna2.setCellValueFactory(new PropertyValueFactory<Produto, String>("Nome"));
 
-		TableColumn<Produto, String> columnDescricao = new TableColumn<>("Descricao");
-		columnDescricao.setCellValueFactory(new PropertyValueFactory<Produto, String>("Descricao"));
+		TableColumn<Produto, String> coluna3 = new TableColumn<>("Descricao");
+		coluna3.setCellValueFactory(new PropertyValueFactory<Produto, String>("Descricao"));
 
-		TableColumn<Produto, String> columnValor = new TableColumn<>("Valor");
-		columnValor.setCellValueFactory(new PropertyValueFactory<Produto, String>("Valor"));
+		TableColumn<Produto, String> coluna4 = new TableColumn<>("Valor");
+		coluna4.setCellValueFactory(new PropertyValueFactory<Produto, String>("Valor"));
 
+		TableColumn<Produto, String> coluna5 = new TableColumn<>("Quantidade");
+		coluna5.setCellValueFactory(new PropertyValueFactory<Produto, String>("qtd"));
 
-		TableColumn<Produto, String> columnQtd = new TableColumn<>("Quantidade");
-		columnQtd.setCellValueFactory(new PropertyValueFactory<Produto, String>("qtd"));
-
-
-		addAll = table.getColumns().addAll(columnCodigo, columnNome, columnDescricao, columnValor, columnQtd);
+		addAll = table.getColumns().addAll(coluna1, coluna2, coluna3, coluna4, coluna5);
 		table.setItems(control.getLista());
-		
+
 	}
 
 	@Override
 	public void handle(ActionEvent event) {
 		if (event.getTarget() == btnAdicionar) {
 			control.adicionar(boundaryParaEntidade());
-		
+
 		} else if (event.getTarget() == btnApagar) {
 			Produto prodselect = table.getSelectionModel().getSelectedItem();
 			control.apagar(prodselect.getCodigo());
-		
+
 		} else if (event.getTarget() == btnPesquisar) {
 			String codProduto = txtCod.getText();
 			Produto prod = control.buscarProduto(codProduto);
 			entidadeParaBoundary(prod);
-		
+
 		}
 	}
 
@@ -194,20 +193,34 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 			p.setCodigo(txtCod.getText());
 			p.setNome(txtNome.getText());
 			p.setDescricao(txtDesc.getText());
-			p.setValor(Double.parseDouble(txtValor.getText()));
-			p.setQtd(Integer.parseInt(txtQtd.getText()));
+			p.setValor(paraDouble(txtValor.getText()));
+			p.setQtd(paraInt(txtQtd.getText()));
 			System.out.println("Produto adicionado");
 			return p;
 		} catch (Exception e) {
-			e.printStackTrace();
-			MensagemErroBoundary erro = new MensagemErroBoundary();
-			try {
-			
-				erro.start("Erro ao adicionar");
-			} catch (Exception e1) {
-			}
+			Alert dialogoErro = new Alert(Alert.AlertType.ERROR);
+			dialogoErro.setTitle("Erro ao adicionar");
+			dialogoErro.setHeaderText(e.getMessage());
+//			dialogoErro.setContentText(e.getMessage());
+			dialogoErro.showAndWait();
 		}
 		return null;
+	}
+
+	private int paraInt(String text) throws Exception {
+		try {
+			return Integer.parseInt(text);
+		} catch (Exception e) {
+			throw new Exception("Valor vazio");
+		} 
+	}
+
+	private double paraDouble(String text) throws Exception {
+		try {
+			return Double.parseDouble(text);
+		} catch (Exception e) {
+			throw new Exception("Valor vazio");
+		} 
 	}
 
 	private void entidadeParaBoundary(Produto p) {
@@ -221,18 +234,15 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 			System.out.println("qtd =" + txtQtd.getText());
 		}
 	}
-	
-	public void definirBackground() throws FileNotFoundException{
+
+	public void definirBackground() throws FileNotFoundException {
 		FileInputStream imagem = new FileInputStream("src/hotel/images/estoque.jpg");
-		Image image = new Image(imagem); 
-	    
-		BackgroundImage backgroundimage = new BackgroundImage(image,
-	    		BackgroundRepeat.NO_REPEAT,  
-	    		BackgroundRepeat.NO_REPEAT,  
-	    		BackgroundPosition.DEFAULT,  
-	    		BackgroundSize.DEFAULT); 
-        
-	    Background background = new Background(backgroundimage); 
-        box.setBackground(background);
+		Image image = new Image(imagem);
+
+		BackgroundImage backgroundimage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
+				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+
+		Background background = new Background(backgroundimage);
+		box.setBackground(background);
 	}
 }
