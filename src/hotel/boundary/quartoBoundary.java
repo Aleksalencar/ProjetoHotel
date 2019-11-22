@@ -36,7 +36,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-public class QuartoBoundary implements BoundaryContent, EventHandler<ActionEvent> {
+public class quartoBoundary implements BoundaryContent, EventHandler<ActionEvent> {
 
 	private QuartosController control = new QuartosController();
 
@@ -69,7 +69,7 @@ public class QuartoBoundary implements BoundaryContent, EventHandler<ActionEvent
 
 
 
-	public QuartoBoundary(Executor e) {
+	public quartoBoundary(Executor e) {
 		this.setExecutor(e);
 		box.setSpacing(5);
 		
@@ -230,12 +230,6 @@ public class QuartoBoundary implements BoundaryContent, EventHandler<ActionEvent
 			return p;
 		} catch (Exception e) {
 			e.printStackTrace();
-			MensagemErroBoundary erro = new MensagemErroBoundary();
-			try {
-			
-				erro.start("Erro ao adicionar");
-			} catch (Exception e1) {
-			}
 		}
 		return null;
 	}

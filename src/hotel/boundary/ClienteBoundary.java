@@ -6,7 +6,6 @@ import com.sun.xml.internal.txw2.output.TXWResult;
 
 import hotel.control.ClienteControl;
 import hotel.entidades.Cliente;
-import hotel.entidades.Produto;
 import hotel.interfaces.BoundaryContent;
 import hotel.interfaces.Executor;
 import javafx.application.Application;
@@ -41,20 +40,18 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 	private TextField txtCpf = new TextField();
 	private TextField txtNumero = new TextField();
 	private Executor executor;
-	private ComboBox<String> sexo = new ComboBox<>();
-	
 
-	
+	private ComboBox<String> sexo = new ComboBox<>();
+	private VBox painelCentral = new VBox();
 	private BorderPane painelPrincipal = new BorderPane();
 	private GridPane painelCampos = new GridPane();
 	private FlowPane painelBotoes = new FlowPane();	
-	private VBox painelCentral = new VBox();
 	
 	private Button btnAdicionar = new Button(" Adicionar ");
 	private Button btnAlterar = new Button(" Alterar ");
 	private Button btnPesquisar = new Button(" Pesquisar Cliente ");
 	private Button btnMenu = new Button(" Voltar ao Menu");
-	private TableView<Produto> table;
+	private TableView<Cliente> table;
 	
 	public Cliente boundaryEntidade(){
 		Cliente c = new Cliente();
@@ -105,6 +102,7 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 		
 		
 		painelPrincipal.setMargin(painelCentral, new Insets(15));
+		
 		painelPrincipal.setTop(labtitulo);
 		painelPrincipal.setCenter(painelCentral);
 		painelPrincipal.setBottom(table);
@@ -120,36 +118,6 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 			}
 		});
 	}
-	
-	private TableView<Produto> generateTable() {
-		TableView<Produto> table = new TableView<>();
-
-	
-		TableColumn<Produto, String> coluna1 = new TableColumn<>("Nome");
-		coluna1.setCellValueFactory(new PropertyValueFactory<Produto, String>("Nome"));
-
-		TableColumn<Produto, String> coluna2 = new TableColumn<>("E-mail");
-		coluna2.setCellValueFactory(new PropertyValueFactory<Produto, String>("E-mail"));
-		
-		TableColumn<Produto, String> coluna3 = new TableColumn<>("Sexo");
-		coluna3.setCellValueFactory(new PropertyValueFactory<Produto, String>("Sexo"));
-		
-		TableColumn<Produto, String> coluna4 = new TableColumn<>("Telefone");
-		coluna4.setCellValueFactory(new PropertyValueFactory<Produto, String>("Telefone"));
-		
-		TableColumn<Produto, String> coluna5 = new TableColumn<>("Endereco");
-		coluna5.setCellValueFactory(new PropertyValueFactory<Produto, String>("Endereco"));
-		
-		TableColumn<Produto, String> coluna6 = new TableColumn<>("CPF");
-		coluna6.setCellValueFactory(new PropertyValueFactory<Produto, String>("CPF"));
-
-		
-
-		table.getColumns().addAll(coluna1, coluna2, coluna3, coluna4, coluna5, coluna6);
-		table.setItems(control.getLista());
-		return table;
-
-	}
 
 	@Override
 	public void handle(ActionEvent event) {
@@ -163,6 +131,35 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 		}
 	}
 	
+	private TableView<Cliente> generateTable() {
+		TableView<Cliente> table = new TableView<>();
+
+	
+		TableColumn<Cliente, String> coluna1 = new TableColumn<>("Nome");
+		coluna1.setCellValueFactory(new PropertyValueFactory<Cliente, String>("Nome"));
+
+		TableColumn<Cliente, String> coluna2 = new TableColumn<>("E-mail");
+		coluna2.setCellValueFactory(new PropertyValueFactory<Cliente, String>("E-mail"));
+		
+		TableColumn<Cliente, String> coluna3 = new TableColumn<>("Sexo");
+		coluna3.setCellValueFactory(new PropertyValueFactory<Cliente, String>("Sexo"));
+		
+		TableColumn<Cliente, String> coluna4 = new TableColumn<>("Telefone");
+		coluna4.setCellValueFactory(new PropertyValueFactory<Cliente, String>("Telefone"));
+		
+		TableColumn<Cliente, String> coluna5 = new TableColumn<>("Endereco");
+		coluna5.setCellValueFactory(new PropertyValueFactory<Cliente, String>("Endereco"));
+		
+		TableColumn<Cliente, String> coluna6 = new TableColumn<>("CPF");
+		coluna6.setCellValueFactory(new PropertyValueFactory<Cliente, String>("CPF"));
+
+		
+
+		table.getColumns().addAll(coluna1, coluna2, coluna3, coluna4, coluna5, coluna6);
+		table.setItems(control.getLista());
+		return table;
+
+	}
 	@Override
 	public void setExecutor(Executor e) {
 		this.executor = e;

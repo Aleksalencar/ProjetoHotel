@@ -33,6 +33,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import jdk.nashorn.internal.runtime.ListAdapter;
 
 public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEvent> {
 
@@ -40,17 +41,18 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 
 	private VBox box = new VBox();
 	GridPane grid = new GridPane();
-
+	
 	private TextField txtCod = new TextField();
 	private TextField txtNome = new TextField();
 	private TextField txtDesc = new TextField();
 	private TextField txtValor = new TextField();
 	private TextField txtQtd = new TextField();
 
-	private Button btnAdicionar = new Button("Adicionar/Alterar");
+	private Button btnAdicionar = new Button("Adicionar");
 	private Button btnPesquisar = new Button("Pesquisar");
 	private Button btnMenu = new Button("Voltar");
 	private Button btnApagar = new Button("Apagar");
+	private Button btnEditar = new Button("Editar");
 
 	private TableView<Produto> table = new TableView<>();
 
@@ -79,16 +81,18 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 		grid.add(btnAdicionar, 0, rowIndex);
 		grid.add(btnPesquisar, 1, rowIndex);
 		grid.add(btnApagar, 2, rowIndex);
-		grid.add(btnMenu, 3, rowIndex);
+		grid.add(btnEditar, 3, rowIndex);
+		grid.add(btnMenu, 4, rowIndex);
 		box.getChildren().add(grid);
 
 		generateTable();
 		configuraTabela();
-
+		
 		box.getChildren().add(table);
 		btnAdicionar.addEventHandler(ActionEvent.ANY, this);
 		btnPesquisar.addEventHandler(ActionEvent.ANY, this);
 		btnApagar.addEventHandler(ActionEvent.ANY, this);
+		btnEditar.addEventHandler(ActionEvent.ANY, this);
 		btnMenu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -97,21 +101,39 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 		});
 	}
 
+	private void ajustartabela() {
+		control.atualizarTabela();
+	}
+
 	private void configuraTabela() {
 		BooleanBinding camposPreenchidos = txtCod.textProperty().isEmpty().or(txtDesc.textProperty().isEmpty())
 				.or(txtQtd.textProperty().isNull().or(txtQtd.textProperty().isNull()));
-		// indica se há algo selecionado na tabela
+		BooleanBinding codigoPreenchido = txtCod.textProperty().isEmpty();
 		BooleanBinding algoSelecionado = table.getSelectionModel().selectedItemProperty().isNull();
-		// alguns botões só são habilitados se algo foi selecionado na tabela
-		btnApagar.disableProperty().bind(algoSelecionado);
 
+		btnApagar.disableProperty().bind(algoSelecionado);
+		btnEditar.disableProperty().bind(algoSelecionado);
+		btnAdicionar.disableProperty().bind(camposPreenchidos);
+		btnPesquisar.disableProperty().bind(codigoPreenchido);
+		
+		txtCod.disableProperty().bind(algoSelecionado.not());
+		
+		table.getSelectionModel().selectedItemProperty().addListener((observable, old, n) -> {
+			if (n != null) {
+				txtCod.setText(n.getCodigo());
+				txtDesc.setText(n.getDescricao());
+				txtNome.setText(n.getNome());
+				txtValor.setText(String.valueOf(n.getValor()));
+				txtQtd.setText(String.valueOf(n.getQtd()));
+			}
+		});
 	}
 
 	private void AddLabel(String s, TextField t) {
 		t.setMinWidth(200);
 		Label l = new Label(s);
 		l.setFont(Font.font("Arial", FontWeight.BLACK, 12));
-		// l.setTextFill(Color.CHARTREUSE);
+		//l.setTextFill(Color.CHARTREUSE);
 		l.setFont(Font.font(15));
 		t.setAlignment(Pos.CENTER_LEFT);
 		grid.add(l, 0, rowIndex);
@@ -122,40 +144,46 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 
 	private void generateTable() {
 
-		TableColumn<Produto, String> coluna1 = new TableColumn<>("Codigo");
-		coluna1.setCellValueFactory(new PropertyValueFactory<Produto, String>("Codigo"));
+		TableColumn<Produto, String> columnCodigo = new TableColumn<>("Codigo");
+		columnCodigo.setCellValueFactory(new PropertyValueFactory<Produto, String>("Codigo"));
 
-		TableColumn<Produto, String> coluna2 = new TableColumn<>("Nome");
-		coluna2.setCellValueFactory(new PropertyValueFactory<Produto, String>("Nome"));
+		TableColumn<Produto, String> columnNome = new TableColumn<>("Nome");
+		columnNome.setCellValueFactory(new PropertyValueFactory<Produto, String>("Nome"));
 
-		TableColumn<Produto, String> coluna3 = new TableColumn<>("Descricao");
-		coluna3.setCellValueFactory(new PropertyValueFactory<Produto, String>("Descricao"));
+		TableColumn<Produto, String> columnDescricao = new TableColumn<>("Descricao");
+		columnDescricao.setCellValueFactory(new PropertyValueFactory<Produto, String>("Descricao"));
 
-		TableColumn<Produto, String> coluna4 = new TableColumn<>("Valor");
-		coluna4.setCellValueFactory(new PropertyValueFactory<Produto, String>("Valor"));
+		TableColumn<Produto, String> columnValor = new TableColumn<>("Valor");
+		columnValor.setCellValueFactory(new PropertyValueFactory<Produto, String>("Valor"));
 
-		TableColumn<Produto, String> coluna5 = new TableColumn<>("Quantidade");
-		coluna5.setCellValueFactory(new PropertyValueFactory<Produto, String>("qtd"));
 
-		addAll = table.getColumns().addAll(coluna1, coluna2, coluna3, coluna4, coluna5);
+		TableColumn<Produto, String> columnQtd = new TableColumn<>("Quantidade");
+		columnQtd.setCellValueFactory(new PropertyValueFactory<Produto, String>("qtd"));
+
+		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+		addAll = table.getColumns().addAll(columnCodigo, columnNome, columnDescricao, columnValor, columnQtd);
 		table.setItems(control.getLista());
-
+		
 	}
 
 	@Override
 	public void handle(ActionEvent event) {
 		if (event.getTarget() == btnAdicionar) {
 			control.adicionar(boundaryParaEntidade());
-
+			limpar();
 		} else if (event.getTarget() == btnApagar) {
 			Produto prodselect = table.getSelectionModel().getSelectedItem();
 			control.apagar(prodselect.getCodigo());
-
+			ajustartabela();
+		} else if (event.getTarget() == btnEditar){
+			Produto prodselect = table.getSelectionModel().getSelectedItem();
+			control.editar(boundaryParaEntidade(),prodselect.getCodigo());
+			ajustartabela();
+			limpar();
 		} else if (event.getTarget() == btnPesquisar) {
 			String codProduto = txtCod.getText();
-			Produto prod = control.buscarProduto(codProduto);
-			entidadeParaBoundary(prod);
-
+			control.buscarProduto(codProduto);		
 		}
 	}
 
@@ -173,6 +201,8 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 	@Override
 	public Pane gerarTela() {
 		// TODO Auto-generated method stub
+		limpar();
+		ajustartabela();
 		return box;
 	}
 
@@ -193,56 +223,31 @@ public class EstoqueBoundary implements BoundaryContent, EventHandler<ActionEven
 			p.setCodigo(txtCod.getText());
 			p.setNome(txtNome.getText());
 			p.setDescricao(txtDesc.getText());
-			p.setValor(paraDouble(txtValor.getText()));
-			p.setQtd(paraInt(txtQtd.getText()));
+			p.setValor(Double.parseDouble(txtValor.getText()));
+			p.setQtd(Integer.parseInt(txtQtd.getText()));
 			System.out.println("Produto adicionado");
 			return p;
 		} catch (Exception e) {
 			Alert dialogoErro = new Alert(Alert.AlertType.ERROR);
 			dialogoErro.setTitle("Erro ao adicionar");
 			dialogoErro.setHeaderText(e.getMessage());
-//			dialogoErro.setContentText(e.getMessage());
 			dialogoErro.showAndWait();
 		}
 		return null;
 	}
 
-	private int paraInt(String text) throws Exception {
-		try {
-			return Integer.parseInt(text);
-		} catch (Exception e) {
-			throw new Exception("Valor vazio");
-		} 
-	}
 
-	private double paraDouble(String text) throws Exception {
-		try {
-			return Double.parseDouble(text);
-		} catch (Exception e) {
-			throw new Exception("Valor vazio");
-		} 
-	}
-
-	private void entidadeParaBoundary(Produto p) {
-		if (p != null) {
-			txtCod.setText(p.getCodigo());
-			txtNome.setText(p.getNome());
-			txtDesc.setText(p.getDescricao());
-			txtValor.setText(String.valueOf(p.getValor()));
-			txtQtd.setText(String.valueOf(p.getQtd()));
-			System.out.println("cod =" + txtCod.getText());
-			System.out.println("qtd =" + txtQtd.getText());
-		}
-	}
-
-	public void definirBackground() throws FileNotFoundException {
+	public void definirBackground() throws FileNotFoundException{
 		FileInputStream imagem = new FileInputStream("src/hotel/images/estoque.jpg");
-		Image image = new Image(imagem);
-
-		BackgroundImage backgroundimage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
-				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-
-		Background background = new Background(backgroundimage);
-		box.setBackground(background);
+		Image image = new Image(imagem); 
+	    
+		BackgroundImage backgroundimage = new BackgroundImage(image,
+	    		BackgroundRepeat.NO_REPEAT,  
+	    		BackgroundRepeat.NO_REPEAT,  
+	    		BackgroundPosition.DEFAULT,  
+	    		BackgroundSize.DEFAULT); 
+        
+	    Background background = new Background(backgroundimage); 
+        box.setBackground(background);
 	}
 }

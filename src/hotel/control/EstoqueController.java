@@ -2,6 +2,9 @@ package hotel.control;
 
 
 
+import java.util.List;
+
+import hotel.dao.EstoqueDAO;
 import hotel.entidades.Produto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,38 +12,35 @@ import javafx.collections.ObservableList;
 
 public class EstoqueController {
 	private ObservableList<Produto> lista = FXCollections.observableArrayList();
+	private EstoqueDAO pDao = new EstoqueDAO();
 	
-	
-	@SuppressWarnings("unlikely-arg-type")
-	public Produto adicionar(Produto prod) {
-		System.out.println(prod.getCodigo());
-		if(lista.isEmpty()){
-			for(Produto p1 : lista ){
-				if(lista.contains(p1.getCodigo())){
-					return p1;
-				}
-			}
-		}	
-		lista.add(prod);
-		return null;
+	public void adicionar(Produto prod) {	
+		pDao.adicionar(prod);
+		atualizarTabela();
 	}
 
-	public Produto buscarProduto(String cod) {
-		return lista.stream().filter(p -> p.getCodigo().equals(cod)).findFirst()
-				.orElseThrow(() -> new Error("Produto nao encontrado"));
+	public void buscarProduto(String cod) {
+		List<Produto> resultado = pDao.buscarProduto(cod);
+		lista.clear();
+		lista.addAll(resultado);
 	}
 	
-	public void SetQtd(Produto p,int q) throws Exception {
-		p.setQtd(q);
-	}
 
 	public ObservableList<Produto> getLista() {
 		return lista;
 	}
 
+	public void atualizarTabela(){
+		lista.clear();
+		List<Produto> resultado = pDao.atualizarTabelas();
+		lista.addAll(resultado);
+	}
 	public void apagar(String codigo) {
-		Produto produto = buscarProduto(codigo);
-		lista.remove(produto);
+		pDao.apagar(codigo);
+	}
+
+	public void editar(Produto prodselect, String codigo) {
+		pDao.atualizar(prodselect,codigo);
 	}
 	
 

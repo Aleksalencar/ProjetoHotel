@@ -3,19 +3,19 @@ package hotel.control;
 import java.util.Set;
 
 import hotel.entidades.Cliente;
-import hotel.entidades.Produto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 
 public class ClienteControl {
-	private Set<Cliente> setCliente = FXCollections.observableSet();
+	private ObservableList<Cliente> lista = FXCollections.observableArrayList();
 
 	public void manterCliente(Cliente q) {
-		setCliente.add(q);
+		lista.add(q);
 	}
 
 	public Cliente alterarCliente(String CPF, Cliente cli) {
-		for (Cliente c : setCliente) {
+		for (Cliente c : lista) {
 			if (c.getCPF().equals(CPF)) {
 				c = cli;
 				return c;
@@ -25,7 +25,7 @@ public class ClienteControl {
 	}
 
 	public Cliente buscarCliente(String CPF) {
-		for (Cliente c : setCliente) {
+		for (Cliente c : lista) {
 			if (c.getCPF().equals(CPF)) {
 				return c;
 			}
@@ -33,13 +33,10 @@ public class ClienteControl {
 		return null;
 	}
 
-	public Set<Cliente> lerCliente() {
-		return setCliente;
+	public ObservableList<Cliente> getLista() {
+		// TODO Auto-generated method stub
+		return lista;
 	}
 
-	public ObservableList<Produto> getLista() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

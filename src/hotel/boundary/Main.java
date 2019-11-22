@@ -24,7 +24,6 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
-
 public class Main extends Application implements EventHandler<Event>, Executor {
 
 	private TilePane window = new TilePane();
@@ -74,7 +73,7 @@ public class Main extends Application implements EventHandler<Event>, Executor {
 		telas.put(btnPromo, new PromocoesBoundary(this));
 		telas.put(btnEstoque, new EstoqueBoundary(this));
 		telas.put("Email Enviar", new emailBoundary(this));
-		telas.put(btnQuarto, new QuartoBoundary(this));
+		telas.put(btnQuarto, new quartoBoundary(this));
 	}
 
 	@Override

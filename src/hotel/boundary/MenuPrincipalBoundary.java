@@ -43,7 +43,7 @@ public class MenuPrincipalBoundary implements BoundaryContent, EventHandler<Acti
 
 		titulo.setTextAlignment(TextAlignment.CENTER);
 		titulo.setFont(Font.font("Arial", FontWeight.BLACK, 30));
-		titulo.setTextFill(Color.CHARTREUSE);
+		titulo.setTextFill(Color.DARKBLUE);
 		titulo.setUnderline(true);
 		box.getChildren().add(titulo);
  

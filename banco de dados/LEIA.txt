@@ -1,0 +1,4 @@
+PROJETO HOTEL
+
+A conecção do programa é pelo mysql, recomendo que use o xampp para gerenciar 
+seu banco.Execute o script para preparar o banco para usar.
