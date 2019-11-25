@@ -2,19 +2,19 @@ package hotel.boundary;
 
 import javax.swing.JOptionPane;
 
-import com.sun.xml.internal.txw2.output.TXWResult;
 
 import hotel.control.ClienteControl;
 import hotel.entidades.Cliente;
+import hotel.entidades.Produto;
 import hotel.interfaces.BoundaryContent;
 import hotel.interfaces.Executor;
-import javafx.application.Application;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -29,7 +29,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
 
 public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEvent>{
 	private ClienteControl control = new ClienteControl();
@@ -48,20 +47,12 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 	private FlowPane painelBotoes = new FlowPane();	
 	
 	private Button btnAdicionar = new Button(" Adicionar ");
-	private Button btnAlterar = new Button(" Alterar ");
-	private Button btnPesquisar = new Button(" Pesquisar Cliente ");
+	private Button btnEditar = new Button(" Alterar ");
+	private Button btnPesquisar = new Button(" Pesquisar ");
+	private Button btnApagar = new Button(" Apagar ");
 	private Button btnMenu = new Button(" Voltar ao Menu");
 	private TableView<Cliente> table;
 	
-	public Cliente boundaryEntidade(){
-		Cliente c = new Cliente();
-		c.setCPF(txtCpf.getText());
-		c.setEmail(txtEmail.getText());
-		c.setEndereco(txtEnd.getText());
-		c.setNome(txtNome.getText());
-		c.setTelefone(txtTelefone.getText());
-		return c;
-	}
 	
 	@SuppressWarnings("static-access")	
 	public ClienteBoundary(Executor e) {
@@ -78,8 +69,8 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 		labtitulo.setFont(Font.font("Arial", FontWeight.BLACK, 25));
 		
 		painelBotoes.setHgap(15);
-		painelCampos.setHgap(5);
-		painelCampos.setVgap(20);
+		painelCampos.setHgap(8);
+		painelCampos.setVgap(25);
 		
 		painelCampos.add(new Label("Nome"), 0, 0);
 		painelCampos.add(txtNome, 1, 0);
@@ -91,15 +82,19 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 		painelCampos.add(txtTelefone, 1, 3);
 		painelCampos.add(new Label("Endereco"), 0, 4);
 		painelCampos.add(txtEnd, 1, 4);
-		painelCampos.add(new Label("CPF"), 0, 5);
-		painelCampos.add(txtCpf, 1, 5);
+		painelCampos.add(new Label("Numero"),0, 5);
+		painelCampos.add(txtNumero, 1, 5);
+		painelCampos.add(new Label("CPF"), 0, 6);
+		painelCampos.add(txtCpf, 1, 6);
+		
 
-		painelBotoes.getChildren().addAll(btnAdicionar, btnPesquisar,btnAlterar,btnMenu);
+		painelBotoes.getChildren().addAll(btnAdicionar, btnPesquisar,btnEditar,btnApagar,btnMenu);
 		
 		painelCentral.setMargin(painelBotoes, new Insets(15));
 		painelCentral.getChildren().addAll(painelCampos,painelBotoes);
 		table = generateTable();
 		
+		configuraTabela() ;
 		
 		painelPrincipal.setMargin(painelCentral, new Insets(15));
 		
@@ -109,8 +104,8 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 		
 		btnAdicionar.addEventHandler(ActionEvent.ANY, this);
 		btnPesquisar.addEventHandler(ActionEvent.ANY, this);
-		btnAlterar.addEventHandler(ActionEvent.ANY, this);
-		
+		btnEditar.addEventHandler(ActionEvent.ANY, this);
+		btnApagar.addEventHandler(ActionEvent.ANY, this);
 		btnMenu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -124,11 +119,40 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 		
 		if (event.getTarget() == btnAdicionar) { 
 			control.manterCliente( boundaryEntidade() );
+			limpar();
+		} else if (event.getTarget() == btnEditar){
+			Cliente clienteSelect = table.getSelectionModel().getSelectedItem();
+			control.alterarCliente(boundaryEntidade(),clienteSelect.getCPF());
+		} else if (event.getTarget() == btnApagar) {
+			Cliente clienteSelect = table.getSelectionModel().getSelectedItem();
+			control.apagar(clienteSelect.getCPF());
+			ajustartabela();
 		} else if (event.getTarget() == btnPesquisar) {
 			String cpfCliente = txtCpf.getText();
-			Cliente c = control.buscarCliente(cpfCliente);
-			JOptionPane.showMessageDialog(null, c);
+			control.buscarCliente(cpfCliente);
 		}
+	}
+
+
+	public Cliente boundaryEntidade(){
+		Cliente c = new Cliente();
+		String tiposexo = sexo.getSelectionModel().getSelectedItem().toString();
+		try {
+			c.setCPF(txtCpf.getText());
+			c.setEmail(txtEmail.getText());
+			c.setEndereco(txtEnd.getText());
+			c.setSexo(tiposexo);
+			c.setNome(txtNome.getText());
+			c.setTelefone(txtTelefone.getText());
+			c.setNumero(Integer.parseInt(txtNumero.getText()));
+			return c;
+		} catch (Exception e) {
+			Alert dialogoErro = new Alert(Alert.AlertType.ERROR);
+			dialogoErro.setTitle("Erro ao adicionar");
+			dialogoErro.setHeaderText(e.getMessage());
+			dialogoErro.showAndWait();
+		}
+		return null;
 	}
 	
 	private TableView<Cliente> generateTable() {
@@ -160,6 +184,49 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 		return table;
 
 	}
+	
+	private void configuraTabela() {
+		BooleanBinding camposPreenchidos = txtNome.textProperty().isEmpty()
+				.or(txtEmail.textProperty().isEmpty())
+				.or(txtEnd.textProperty().isEmpty())
+				.or(txtNumero.textProperty().isNull())
+				.or(txtCpf.textProperty().isEmpty())
+				.or(txtTelefone.textProperty().isEmpty());
+		BooleanBinding algoSelecionado = table.getSelectionModel().selectedItemProperty().isNull();
+		BooleanBinding cpfpreenchido = txtCpf.textProperty().isEmpty();
+		
+		btnApagar.disableProperty().bind(algoSelecionado);
+		btnEditar.disableProperty().bind(algoSelecionado);
+		btnAdicionar.disableProperty().bind(camposPreenchidos);
+		btnPesquisar.disableProperty().bind(cpfpreenchido);
+
+		
+		table.getSelectionModel().selectedItemProperty().addListener((observable, old, n) -> {
+			if (n != null) {
+				txtNome.setText(n.getNome());
+				txtEmail.setText(n.getEmail());
+				txtEnd.setText(n.getEndereco());
+				txtNumero.setText(String.valueOf(n.getNumero()));
+				txtCpf.setText(n.getCPF());
+				txtTelefone.setText(n.getTelefone());
+			}
+		});
+	}
+	
+	private void ajustartabela() {
+		control.atualizarTabela();
+	}
+
+	private void limpar() {
+		table.getSelectionModel().select(null);
+		txtNome.setText(null);
+		txtEmail.setText(null);
+		txtEnd.setText(null);
+		txtNumero.setText(null);
+		txtCpf.setText(null);
+		txtTelefone.setText(null);
+	}
+	
 	@Override
 	public void setExecutor(Executor e) {
 		this.executor = e;

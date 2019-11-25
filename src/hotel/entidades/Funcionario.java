@@ -9,7 +9,7 @@ public class Funcionario extends Pessoa{
 	private String endereco;
 	private String CPF;
 	private int numero;
-	private char sexo;
+	private String sexo;
 	private String login;
 	private String senha;
 	private tipoFuncionario cargo;
@@ -56,10 +56,10 @@ public class Funcionario extends Pessoa{
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
-	public char getSexo() {
+	public String getSexo() {
 		return sexo;
 	}
-	public void setSexo(char sexo) {
+	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
 	public String getLogin() {

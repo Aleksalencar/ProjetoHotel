@@ -7,7 +7,7 @@ public class Cliente extends Pessoa{
 	private String endereco;
 	private String CPF;
 	private int numero;
-	private char sexo;
+	private String sexo;
 	private int qtdCliente;
 	
 	public String getNome() {
@@ -47,11 +47,11 @@ public class Cliente extends Pessoa{
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
-	public char getSexo() {
+	public String getSexo() {
 		return sexo;
 	}
-	public void setSexo(char sexo) {
-		this.sexo = sexo;
+	public void setSexo(String output) {
+		this.sexo = output;
 	}
 	public int getQtdCliente() {
 		return qtdCliente;

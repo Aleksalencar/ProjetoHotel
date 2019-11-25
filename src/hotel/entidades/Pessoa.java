@@ -8,7 +8,7 @@ public abstract class Pessoa {
 	protected String endereco;
 	protected String CPF;
 	protected int numero;
-	protected char sexo;
+	protected String sexo;
 	
 	protected String getNome() {
 		return nome;
@@ -46,10 +46,10 @@ public abstract class Pessoa {
 	protected void setNumero(int numero) {
 		this.numero = numero;
 	}
-	protected char getSexo() {
+	protected String getSexo() {
 		return sexo;
 	}
-	protected void setSexo(char sexo) {
+	protected void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
 	

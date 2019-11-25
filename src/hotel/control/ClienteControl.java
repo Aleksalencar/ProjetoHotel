@@ -1,41 +1,43 @@
 package hotel.control;
 
-import java.util.Set;
+import java.util.List;
 
+import hotel.dao.ClienteDAO;
 import hotel.entidades.Cliente;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
 
 public class ClienteControl {
 	private ObservableList<Cliente> lista = FXCollections.observableArrayList();
-
+	private ClienteDAO cDAO = new ClienteDAO();
+	
 	public void manterCliente(Cliente q) {
-		lista.add(q);
+		cDAO.adicionar(q);
+		atualizarTabela();
 	}
 
-	public Cliente alterarCliente(String CPF, Cliente cli) {
-		for (Cliente c : lista) {
-			if (c.getCPF().equals(CPF)) {
-				c = cli;
-				return c;
-			}
-		}
-		return null;
-	}
-
-	public Cliente buscarCliente(String CPF) {
-		for (Cliente c : lista) {
-			if (c.getCPF().equals(CPF)) {
-				return c;
-			}
-		}
-		return null;
+	public void buscarCliente(String CPF) {
+		List<Cliente> resultado = cDAO.buscarCliente(CPF);
+		lista.clear();
+		lista.addAll(resultado);
 	}
 
 	public ObservableList<Cliente> getLista() {
-		// TODO Auto-generated method stub
 		return lista;
+	}
+
+	public void alterarCliente(Cliente clienteselect, String cpf) {
+		cDAO.atualizar(clienteselect,cpf);
+	}
+
+	public void atualizarTabela() {
+		lista.clear();
+		List<Cliente> resultado = cDAO.atualizarTabelas();
+		lista.addAll(resultado);
+	}
+
+	public void apagar(String cpf) {
+		cDAO.apagar(cpf);
 	}
 
 
