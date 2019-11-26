@@ -37,7 +37,6 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 	private TextField txtTelefone = new TextField();
 	private TextField txtEnd = new TextField();
 	private TextField txtCpf = new TextField();
-	private TextField txtNumero = new TextField();
 	private Executor executor;
 
 	private ComboBox<String> sexo = new ComboBox<>();
@@ -59,7 +58,7 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 		this.setExecutor(e);
 		
 		ObservableList<String> tipoSexo = 
-				FXCollections.observableArrayList("Feminino", "Masculino");
+				FXCollections.observableArrayList("F", "M");
 		sexo.setItems(tipoSexo);	
 
 		painelPrincipal.setStyle("-fx-padding:20px");
@@ -82,10 +81,8 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 		painelCampos.add(txtTelefone, 1, 3);
 		painelCampos.add(new Label("Endereco"), 0, 4);
 		painelCampos.add(txtEnd, 1, 4);
-		painelCampos.add(new Label("Numero"),0, 5);
-		painelCampos.add(txtNumero, 1, 5);
-		painelCampos.add(new Label("CPF"), 0, 6);
-		painelCampos.add(txtCpf, 1, 6);
+		painelCampos.add(new Label("CPF"), 0, 5);
+		painelCampos.add(txtCpf, 1, 5);
 		
 
 		painelBotoes.getChildren().addAll(btnAdicionar, btnPesquisar,btnEditar,btnApagar,btnMenu);
@@ -123,6 +120,7 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 		} else if (event.getTarget() == btnEditar){
 			Cliente clienteSelect = table.getSelectionModel().getSelectedItem();
 			control.alterarCliente(boundaryEntidade(),clienteSelect.getCPF());
+			ajustartabela();
 		} else if (event.getTarget() == btnApagar) {
 			Cliente clienteSelect = table.getSelectionModel().getSelectedItem();
 			control.apagar(clienteSelect.getCPF());
@@ -144,7 +142,6 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 			c.setSexo(tiposexo);
 			c.setNome(txtNome.getText());
 			c.setTelefone(txtTelefone.getText());
-			c.setNumero(Integer.parseInt(txtNumero.getText()));
 			return c;
 		} catch (Exception e) {
 			Alert dialogoErro = new Alert(Alert.AlertType.ERROR);
@@ -162,8 +159,8 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 		TableColumn<Cliente, String> coluna1 = new TableColumn<>("Nome");
 		coluna1.setCellValueFactory(new PropertyValueFactory<Cliente, String>("Nome"));
 
-		TableColumn<Cliente, String> coluna2 = new TableColumn<>("E-mail");
-		coluna2.setCellValueFactory(new PropertyValueFactory<Cliente, String>("E-mail"));
+		TableColumn<Cliente, String> coluna2 = new TableColumn<>("Email");
+		coluna2.setCellValueFactory(new PropertyValueFactory<Cliente, String>("Email"));
 		
 		TableColumn<Cliente, String> coluna3 = new TableColumn<>("Sexo");
 		coluna3.setCellValueFactory(new PropertyValueFactory<Cliente, String>("Sexo"));
@@ -189,7 +186,6 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 		BooleanBinding camposPreenchidos = txtNome.textProperty().isEmpty()
 				.or(txtEmail.textProperty().isEmpty())
 				.or(txtEnd.textProperty().isEmpty())
-				.or(txtNumero.textProperty().isNull())
 				.or(txtCpf.textProperty().isEmpty())
 				.or(txtTelefone.textProperty().isEmpty());
 		BooleanBinding algoSelecionado = table.getSelectionModel().selectedItemProperty().isNull();
@@ -206,7 +202,6 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 				txtNome.setText(n.getNome());
 				txtEmail.setText(n.getEmail());
 				txtEnd.setText(n.getEndereco());
-				txtNumero.setText(String.valueOf(n.getNumero()));
 				txtCpf.setText(n.getCPF());
 				txtTelefone.setText(n.getTelefone());
 			}
@@ -222,7 +217,6 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 		txtNome.setText(null);
 		txtEmail.setText(null);
 		txtEnd.setText(null);
-		txtNumero.setText(null);
 		txtCpf.setText(null);
 		txtTelefone.setText(null);
 	}
@@ -240,6 +234,8 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 	@Override
 	public Pane gerarTela() {
 		// TODO Auto-generated method stub
+		limpar();
+		ajustartabela();
 		return painelPrincipal;
 	}
 
