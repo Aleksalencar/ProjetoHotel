@@ -64,28 +64,31 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 		painelPrincipal.setStyle("-fx-padding:20px");
 
 		Label labtitulo = new Label("GERENCIAR CLIENTES");
+		labtitulo.setOpaqueInsets( new Insets(15));
 		labtitulo.setUnderline(true);	
 		labtitulo.setFont(Font.font("Arial", FontWeight.BLACK, 25));
 		
 		painelBotoes.setHgap(15);
+		painelBotoes.setVgap(10);
 		painelCampos.setHgap(8);
 		painelCampos.setVgap(25);
 		
 		painelCampos.add(new Label("Nome"), 0, 0);
 		painelCampos.add(txtNome, 1, 0);
-		painelCampos.add(new Label("E-mail"), 0, 1);
-		painelCampos.add(txtEmail, 1, 1);
-		painelCampos.add(new Label("Sexo"), 0, 2);
-		painelCampos.add(sexo, 1, 2);
-		painelCampos.add(new Label("Telefone"), 0, 3);
-		painelCampos.add(txtTelefone, 1, 3);
-		painelCampos.add(new Label("Endereco"), 0, 4);
-		painelCampos.add(txtEnd, 1, 4);
-		painelCampos.add(new Label("CPF"), 0, 5);
-		painelCampos.add(txtCpf, 1, 5);
+		painelCampos.add(new Label("Sexo"), 0, 1);
+		painelCampos.add(sexo, 1, 1);
+		painelCampos.add(new Label("CPF"), 0, 2);
+		painelCampos.add(txtCpf, 1, 2);
+		painelCampos.add(new Label("E-mail"), 2, 0);
+		painelCampos.add(txtEmail, 3, 0);
+		painelCampos.add(new Label("Telefone"), 2, 1);
+		painelCampos.add(txtTelefone, 3, 1);
+		painelCampos.add(new Label("Endereco"), 2, 2);
+		painelCampos.add(txtEnd, 3, 2);
+		painelCampos.setVgap(20);
 		
-
 		painelBotoes.getChildren().addAll(btnAdicionar, btnPesquisar,btnEditar,btnApagar,btnMenu);
+		painelBotoes.setMargin(painelBotoes, new Insets(15));
 		
 		painelCentral.setMargin(painelBotoes, new Insets(15));
 		painelCentral.getChildren().addAll(painelCampos,painelBotoes);
@@ -93,12 +96,13 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 		
 		configuraTabela() ;
 		
-		painelPrincipal.setMargin(painelCentral, new Insets(15));
-		
 		painelPrincipal.setTop(labtitulo);
 		painelPrincipal.setCenter(painelCentral);
 		painelPrincipal.setBottom(table);
 		
+		painelPrincipal.setMargin(painelCentral, new Insets(15));
+		painelPrincipal.setMargin(labtitulo, new Insets(15));
+
 		btnAdicionar.addEventHandler(ActionEvent.ANY, this);
 		btnPesquisar.addEventHandler(ActionEvent.ANY, this);
 		btnEditar.addEventHandler(ActionEvent.ANY, this);

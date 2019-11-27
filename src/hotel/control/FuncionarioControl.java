@@ -34,4 +34,9 @@ public class FuncionarioControl {
 	public Set<Funcionario> lerFuncionario() {
 		return setFuncionario;
 	}
+
+	public void alterarCliente(Funcionario boundaryEntidade, String cpf) {
+		// TODO Auto-generated method stub
+		
+	}
 }
