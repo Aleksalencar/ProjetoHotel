@@ -68,6 +68,7 @@ public class Main extends Application implements EventHandler<Event>, Executor {
 	public void comandoTelas() throws FileNotFoundException {
 		// gerar as telas
 		telas.put("Menu principal", new MenuPrincipalBoundary(this));
+		telas.put(btnHosp, new HospedagemBoundary(this));
 		telas.put(btnFunc, new FuncionarioBoundary(this));
 		telas.put(btnCliente, new ClienteBoundary(this));
 		telas.put(btnPromo, new PromocoesBoundary(this));
