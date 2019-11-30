@@ -168,15 +168,16 @@ public class quartoBoundary implements BoundaryContent, EventHandler<ActionEvent
 	public void handle(ActionEvent event) {
 		if (event.getTarget() == btnAdicionar) {
 			control.adicionar(boundaryParaEntidade());
+			limpar();
 		
 		} else if (event.getTarget() == btnApagar) {
 			Quarto prodselect = table.getSelectionModel().getSelectedItem();
 			control.apagar(prodselect.getNumero());
+			ajustartabela();
 		
 		} else if (event.getTarget() == btnPesquisar) {
 			String codNumero = txtNumero.getText();
-			Quarto num = control.buscaQuarto(codNumero);
-			entidadeParaBoundary(num);
+			control.buscaQuarto(codNumero);
 		
 		} else if (event.getTarget() == btnAddItem) {
 			//control.addItem();
@@ -195,9 +196,14 @@ public class quartoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		return this.executor;
 	}
 
+	private void ajustartabela() {
+		control.atualizarTabela();
+	}
+	
 	@Override
 	public Pane gerarTela() {
-		// TODO Auto-generated method stub
+		limpar();
+		ajustartabela();
 		return box;
 	}
 

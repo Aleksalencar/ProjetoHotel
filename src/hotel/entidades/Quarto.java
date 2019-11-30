@@ -6,8 +6,8 @@ import javafx.scene.control.ComboBox;
 public class Quarto{
 	private String andar;
 	private String numero;
-	String checkBox;
-	String tipo ;
+	private String checkBox;
+	private String tipo ;
 	
 	
 	public String getNumero() {

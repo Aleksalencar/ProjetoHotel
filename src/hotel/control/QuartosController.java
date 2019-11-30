@@ -1,6 +1,11 @@
 package hotel.control;
 
+import java.util.List;
 import java.util.Set;
+
+import hotel.dao.ClienteDAO;
+import hotel.dao.QuartoDAO;
+import hotel.entidades.Cliente;
 import hotel.entidades.Quarto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,34 +18,36 @@ import javafx.scene.layout.Pane;
 
 public class QuartosController {
 	private ObservableList<Quarto> lista = FXCollections.observableArrayList();
+	private QuartoDAO cDAO = new QuartoDAO();
 
 	
 	public ObservableList<Quarto> getLista() {
 		return lista;
 	}
 
-	@SuppressWarnings("unlikely-arg-type")
-	public Quarto adicionar(Quarto quarto) {
-		System.out.println(quarto.getNumero());
-		if(lista.isEmpty()){
-			for(Quarto q1 : lista ){
-				if(lista.contains(q1.getNumero())){
-					return q1;
-				}
-			}
-		}	
-		lista.add(quarto);
-		return null;
+	public void adicionar(Quarto quarto) {
+		cDAO.adicionar(quarto);
+		atualizarTabela();
 	}
 	
-	public void apagar(String codigo) {
-		Quarto quarto = buscaQuarto(codigo);
-		lista.remove(quarto);
+	public void apagar(String numero) {
+		cDAO.apagar(numero);
 	}
 	
-	public Quarto buscaQuarto(String num) {
-		return lista.stream().filter(p -> p.getNumero().equals(num)).findFirst()
-				.orElseThrow(() -> new Error("Quarto nao encontrado"));
+	public void alterarQuarto(Quarto quartoselect, String numero) {
+		cDAO.atualizar(quartoselect,numero);
+	}
+
+	public void atualizarTabela() {
+		lista.clear();
+		List<Quarto> resultado = cDAO.atualizarTabelas();
+		lista.addAll(resultado);
+	}
+	
+	public void buscaQuarto(String numero) {
+		List<Quarto> resultado = cDAO.buscarQuarto(numero);
+		lista.clear();
+		lista.addAll(resultado);
 	}
 
 }
