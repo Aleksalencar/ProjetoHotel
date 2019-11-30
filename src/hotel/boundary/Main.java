@@ -24,6 +24,7 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
+
 public class Main extends Application implements EventHandler<Event>, Executor {
 
 	private TilePane window = new TilePane();
@@ -48,9 +49,9 @@ public class Main extends Application implements EventHandler<Event>, Executor {
 		window.addEventHandler(ActionEvent.ANY, this);
 
 		comandoTelas();
-		
+
 		definirBackgroundCampos();
-		
+
 		window.getChildren().add(pane);
 		Scene scn = new Scene(window);
 		stage.setTitle("Controle de hotel");
@@ -61,8 +62,9 @@ public class Main extends Application implements EventHandler<Event>, Executor {
 	}
 
 	private void definirBackgroundCampos() {
-		pane.setStyle("-fx-background-color:rgba(241, 238, 238, 0.6);-fx-background-radius: 10;-fx-background-insets: -10px;");
-		
+		pane.setStyle(
+				"-fx-background-color:rgba(241, 238, 238, 0.6);-fx-background-radius: 10;-fx-background-insets: -10px;");
+
 	}
 
 	public void comandoTelas() throws FileNotFoundException {

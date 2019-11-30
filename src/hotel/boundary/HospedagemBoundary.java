@@ -37,7 +37,7 @@ public class HospedagemBoundary implements BoundaryContent, EventHandler<ActionE
 	public HospedagemBoundary(Executor e) {
 		this.setExecutor(e);
 		
-		Label labtitulo = new Label("GERENCIAR CLIENTES");
+		Label labtitulo = new Label("Controle de Hospedagens");
 		labtitulo.setOpaqueInsets( new Insets(15));
 		labtitulo.setUnderline(true);	
 		labtitulo.setFont(Font.font("Arial", FontWeight.BLACK, 25));
