@@ -14,7 +14,7 @@ import hotel.interfaces.IClienteDAO;
 public class ClienteDAO implements IClienteDAO {
 	private static final String URL = "jdbc:mariadb://localhost:3306/hoteldb?allowMultiQueries=true";
 	private static final String USER = "root";
-	private static final String PASS = "";
+	private static final String PASS = "123";
 	@Override
 	public void adicionar(Cliente cliente) {
 		try{

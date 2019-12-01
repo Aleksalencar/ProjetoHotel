@@ -94,7 +94,7 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 		painelCentral.getChildren().addAll(painelCampos,painelBotoes);
 		table = generateTable();
 		
-		configuraTabela() ;
+		table = configuraTabela() ;
 		
 		painelPrincipal.setTop(labtitulo);
 		painelPrincipal.setCenter(painelCentral);
@@ -113,6 +113,10 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 				executor.executar("Menu principal");
 			}
 		});
+	}
+
+	public ClienteBoundary() {
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -156,7 +160,7 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 		return null;
 	}
 	
-	private TableView<Cliente> generateTable() {
+	TableView<Cliente> generateTable() {
 		TableView<Cliente> table = new TableView<>();
 
 	
@@ -186,7 +190,7 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 
 	}
 	
-	private void configuraTabela() {
+	 TableView<Cliente> configuraTabela() {
 		BooleanBinding camposPreenchidos = txtNome.textProperty().isEmpty()
 				.or(txtEmail.textProperty().isEmpty())
 				.or(txtEnd.textProperty().isEmpty())
@@ -210,6 +214,7 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 				txtTelefone.setText(n.getTelefone());
 			}
 		});
+		return table;
 	}
 	
 	private void ajustartabela() {
