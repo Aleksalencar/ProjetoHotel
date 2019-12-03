@@ -190,7 +190,7 @@ public class ClienteBoundary implements BoundaryContent, EventHandler<ActionEven
 
 	}
 	
-	 TableView<Cliente> configuraTabela() {
+	private TableView<Cliente> configuraTabela() {
 		BooleanBinding camposPreenchidos = txtNome.textProperty().isEmpty()
 				.or(txtEmail.textProperty().isEmpty())
 				.or(txtEnd.textProperty().isEmpty())
